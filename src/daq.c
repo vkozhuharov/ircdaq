@@ -15,7 +15,7 @@ int status;
 int *pstatus;
 
 int main(int argc, char *argv[]) {
-  
+
   //Configuration part
   
   status = -1;
