@@ -16,7 +16,7 @@ SRCDIR  = $(TOPDIR)/src
 OBJDIR  = $(TOPDIR)/obj
 DEPDIR  = $(TOPDIR)/dep
 
-LIBS     = $(SYSLIBS)  -L$(DIMDIR)/linux -ldim -lpthread  -L -lconthost
+LIBS     = $(SYSLIBS)  -L$(DIMDIR)/linux -ldim -lpthread  -L -lconthost -lusb-1.0 
 #LIBS     = $(SYSLIBS) -lusb-1.0 -L$(DIMDIR)/linux -ldim -lpthread  -L -lconthost
 
 #-lconthost
@@ -42,7 +42,10 @@ SRC = daq.c\
       sendData.c \
       runcontrol.c \
       daqControl.c \
-      net.c
+      net.c \
+      usbtools.c \
+      sysutils.c \
+      gandalfUSB.c
 
 #OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 OBJ = $(SRC:.c=.o)

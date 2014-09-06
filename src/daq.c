@@ -14,12 +14,39 @@
 int status;
 int *pstatus;
 
-int main(int argc, char *argv[]) {
+//libusb_device_handle *handle=NULL;
 
-  //Configuration part
+void *handle=NULL;
+
+int daq_quit(){
+  if( access( "quit", F_OK ) != -1 ) {
+    // file exists
+    return 1;
+  } else {
+    // file doesn't exist
+    return 0;
+  }
+}
+
+
+
+
+int main(int argc, char *argv[]) {
+	int res;
+	//Configuration part
   
-  status = -1;
-  pstatus = &status;
+	status = -1;
+	pstatus = &status;
+
+
+
+	//GANDALF (hardware) configuration
+	res = GANDALFConfig(handle);
+
+	if (res < 1) {
+		printf("No GANDALF found \n");
+		exit(0);
+	}
   
 
   // Starting the necessary data processing units

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
-		<cconfiguration id="0.717831035">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.717831035" moduleId="org.eclipse.cdt.core.settings" name="Default">
+		<cconfiguration id="0.85749030">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.85749030" moduleId="org.eclipse.cdt.core.settings" name="Default">
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -14,91 +14,72 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="IRCDAQ" buildProperties="" description="" id="0.717831035" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">
-					<folderInfo id="0.717831035." name="/" resourcePath="">
-						<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.982263173" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
-							<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.982263173.1160538425" name=""/>
-							<builder id="org.eclipse.cdt.build.core.settings.default.builder.1977859194" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.482370273" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.812476393" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1912109794" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+				<configuration buildProperties="" description="" id="0.85749030" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">
+					<folderInfo id="0.85749030." name="/" resourcePath="">
+						<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.243656328" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
+							<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.243656328.1088749994" name=""/>
+							<builder id="org.eclipse.cdt.build.core.settings.default.builder.372816722" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.1456391587" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
+							<tool id="org.eclipse.cdt.build.core.settings.holder.1654064109" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.499235111" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include"/>
 									<listOptionValue builtIn="false" value="/home/veni/na62/develop/runcontrol/dim_v20r9/dim"/>
 								</option>
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.999003164" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.824814811" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.1465308333" name="UPC" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.923177584" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+							<tool id="org.eclipse.cdt.build.core.settings.holder.1369478220" name="UPC" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1774932825" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include"/>
 									<listOptionValue builtIn="false" value="/home/veni/na62/develop/runcontrol/dim_v20r9/dim"/>
 								</option>
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.685841233" languageId="org.eclipse.cdt.core.parser.upc.upc" languageName="UPC" sourceContentType="org.eclipse.cdt.core.parser.upc.upcSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1108676262" languageId="org.eclipse.cdt.core.parser.upc.upc" languageName="UPC" sourceContentType="org.eclipse.cdt.core.parser.upc.upcSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.683740440" name="LLVM bytecode assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.804506386" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+							<tool id="org.eclipse.cdt.build.core.settings.holder.1680439372" name="LLVM bytecode assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.692800790" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include"/>
 									<listOptionValue builtIn="false" value="/home/veni/na62/develop/runcontrol/dim_v20r9/dim"/>
 								</option>
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.661679968" languageId="org.eclipse.cdt.managedbuilder.llvm.ui.llvmAssembly" languageName="LLVM bytecode assembly" sourceContentType="org.eclipse.cdt.managedbuilder.llvm.ui.llvmAssemblySource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1322494441" languageId="org.eclipse.cdt.managedbuilder.llvm.ui.llvmAssembly" languageName="LLVM bytecode assembly" sourceContentType="org.eclipse.cdt.managedbuilder.llvm.ui.llvmAssemblySource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.1774033348" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.122924919" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+							<tool id="org.eclipse.cdt.build.core.settings.holder.1631561339" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1402001067" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include"/>
 									<listOptionValue builtIn="false" value="/home/veni/na62/develop/runcontrol/dim_v20r9/dim"/>
 								</option>
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1357768221" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.756417898" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.834231213" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.349696782" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+							<tool id="org.eclipse.cdt.build.core.settings.holder.1456741397" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.2007049640" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include"/>
 									<listOptionValue builtIn="false" value="/home/veni/na62/develop/runcontrol/dim_v20r9/dim"/>
 								</option>
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.21737647" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.563821975" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.1374904669" name="Fortran" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1611198276" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+							<tool id="org.eclipse.cdt.build.core.settings.holder.9222326" name="Fortran" superClass="org.eclipse.cdt.build.core.settings.holder">
+								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1459686852" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/include"/>
 									<listOptionValue builtIn="false" value="/home/veni/na62/develop/runcontrol/dim_v20r9/dim"/>
 								</option>
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1103878866" languageId="org.eclipse.photran.cdtinterface.org.eclipse.photran.cdtinterface.fortran" languageName="Fortran" sourceContentType="org.eclipse.photran.core.fortranSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1020149603" languageId="org.eclipse.photran.cdtinterface.org.eclipse.photran.cdtinterface.fortran" languageName="Fortran" sourceContentType="org.eclipse.photran.core.fortranSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="0.717831035.12593065" name="daq.c" rcbsApplicability="disable" resourcePath="src/daq.c" toolsToInvoke="org.eclipse.cdt.build.core.settings.holder.834231213.1714853233">
-						<tool id="org.eclipse.cdt.build.core.settings.holder.834231213.1714853233" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder.812476393">
-							<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1177730391" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-								<listOptionValue builtIn="false" value="/usr/include"/>
-								<listOptionValue builtIn="false" value="/home/veni/na62/develop/runcontrol/dim_v20r9/dim"/>
-							</option>
-							<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1988186237" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
-						</tool>
-					</fileInfo>
-					<fileInfo id="0.717831035.1278416444" name="sendData.c" rcbsApplicability="disable" resourcePath="src/sendData.c" toolsToInvoke="org.eclipse.cdt.build.core.settings.holder.834231213.1469656659">
-						<tool id="org.eclipse.cdt.build.core.settings.holder.834231213.1469656659" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder.812476393">
-							<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.425263397" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-								<listOptionValue builtIn="false" value="/usr/include/"/>
-							</option>
-							<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.2032866047" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
-						</tool>
-					</fileInfo>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="IRCDAQ.null.894223452" name="IRCDAQ"/>
+		<project id="ircdaq.null.602432897" name="ircdaq"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="0.85749030">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="0.717831035">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
-	<storageModule moduleId="refreshScope" versionNumber="2">
-		<configuration configurationName="Default">
-			<resource resourceType="PROJECT" workspacePath="/IRCDAQ"/>
-		</configuration>
-	</storageModule>
 </cproject>
