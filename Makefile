@@ -56,6 +56,7 @@ default:
 	gmake daq
 
 daq: $(OBJ)
+	mkdir -p data
 	$(CC) $(CFLAGS) -o daq $(OBJ:%=$(OBJDIR)/%) $(LIBS) 
 
 
@@ -67,12 +68,14 @@ clean:
 include $(DEPENDS) 
 
 $(DEPDIR)/%.d: %.c
+	mkdir -p $(DEPDIR)
 	$(SHELL) -ec '$(CC) -MM $(CPPFLAGS) $< \
               | sed s/$*.o/$*.o\ $*.d/ > $@'
 
-$(SRC): 
+$(SRC):
 
 $(OBJ):
+	mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $(OBJDIR)/$(*F).o
 
 
