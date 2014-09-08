@@ -4,12 +4,13 @@
  *  Created on: 06.09.2014
  *      Author: veni
  */
+#include <libusb-1.0/libusb.h>
 
 #ifndef GANDALF_H_
 #define GANDALF_H_
 
-#define MY_VENDOR_ID	        0x04b4
-#define MY_PRODUCT_ID			0x1002
+#define GANDALF_VID	        0x04b4
+#define GANDALF_PID			0x1002
 
 //GANDALF addresses definition:
 #define BOARDSTATUS  0x00fc
@@ -45,6 +46,16 @@
 #define GEN_CONF0       0xb00
 #define GEN_CONF1       0xb04
 #define GEN_CONF2       0xb08
+
+//Main structure for GANDALF configuration and communication
+typedef struct GANDALFconfig {
+	libusb_device **list;
+	libusb_device *dev;
+	libusb_context *ctx;
+	libusb_device_handle *handle;
+	int attached;
+
+} GANDALFconfig;
 
 
 

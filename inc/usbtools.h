@@ -11,7 +11,7 @@
 #include <libusb-1.0/libusb.h>
 #include <stdio.h>
 
-int is_usbdevblock( libusb_device *dev );
+int is_usbdevblock( libusb_device *dev,int,int );
 int array2int(char a[4]);
 int int2array(int i,char a[4]);
 

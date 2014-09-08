@@ -10,6 +10,7 @@
 #include <fcntl.h>              /* Obtain O_* constant definitions */
 
 #include "daq.h"
+#include "gandalf.h"
 
 int status;
 int *pstatus;
@@ -17,6 +18,9 @@ int *pstatus;
 //libusb_device_handle *handle=NULL;
 
 void *handle=NULL;
+
+GANDALFconfig cfg;
+
 
 int daq_quit(){
   if( access( "quit", F_OK ) != -1 ) {
@@ -34,14 +38,20 @@ int daq_quit(){
 int main(int argc, char *argv[]) {
 	int res;
 	//Configuration part
-  
-//	status = -1;
-//	pstatus = &status;
 
-// both repos
+
+	//Reset the things
+	res = GANDALFCleanConfig(&cfg);
+
+	//Initialize the board
+	res = GANDALFInit(&cfg);
 
 	//GANDALF (hardware) configuration
-	res = GANDALFConfig(handle);
+	res = GANDALFConfig(&cfg);
+
+
+
+
 
 	if (res < 1) {
 		printf("No GANDALF found \n");

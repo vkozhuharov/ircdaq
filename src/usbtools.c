@@ -8,14 +8,16 @@
 #include "usbtools.h"
 #include "gandalf.h"
 
-extern void *handle;
+//extern void *handle;
+extern GANDALFconfig cfg;
 
-int is_usbdevblock( libusb_device *dev )
+
+int is_usbdevblock( libusb_device *dev,int vid,int pid )
 {
 	struct libusb_device_descriptor desc;
 	int r = libusb_get_device_descriptor( dev, &desc );
 
-	if( desc.idVendor == MY_VENDOR_ID && desc.idProduct == MY_PRODUCT_ID ){
+	if( desc.idVendor == vid && desc.idProduct == pid){
 		return 1;
 	}
 
@@ -43,7 +45,7 @@ int writeUSB(int addr,int val) {
   int wIndex = 0;
   int2array(val,a);
   printf("Writing to addr: %08X value %08X\n",addr,val);
-  libusb_control_transfer(handle,bmRequestType,bRequest, wValue, wIndex, a, 4, timeout);
+  libusb_control_transfer(cfg.handle,bmRequestType,bRequest, wValue, wIndex, a, 4, timeout);
   val = array2int(a);
   printf("Written to addr: %08X value %08X\n",addr,val);
   return val;
@@ -65,7 +67,7 @@ unsigned int readUSB(int addr) {
   // printf("bmRequestType: \t 0x%2X\n" , bmRequestType);
   // printf("bRequest: \t 0x%02X\n" , bRequest);
 
-  libusb_control_transfer(handle,bmRequestType,bRequest, wValue, wIndex, a, 4, timeout);
+  libusb_control_transfer(cfg.handle,bmRequestType,bRequest, wValue, wIndex, a, 4, timeout);
   val = array2int(a);
   printf("Adress: 0x%02X: \t  0x%8X\n",wValue,val);
 

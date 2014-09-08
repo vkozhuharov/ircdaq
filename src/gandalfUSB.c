@@ -8,9 +8,89 @@
 #include "usbtools.h"
 #include "gandalf.h"
 
+int GANDALFCleanConfig(GANDALFconfig *cfg){
+	cfg->dev = NULL;
+	cfg->ctx = NULL;
+	cfg->handle = NULL;
+	return 0;
+}
 
 
-int GANDALFConfig(void * handle) {
+libusb_device * findGANDALF(GANDALFconfig *cfg) {
+	int i;
+	ssize_t cnt = libusb_get_device_list(cfg->ctx, &cfg->list);
+	if (cnt < 0){
+	    printf( "no usb devices found\n" );
+	    error();
+	}
+	  // find our device
+    for(i = 0; i < cnt; i++){
+	   libusb_device *device = cfg->list[i];
+	    if( is_usbdevblock(cfg->list[i],GANDALF_VID,GANDALF_PID) ){
+	      cfg->dev = cfg->list[i];
+	      break;
+	    }
+	  }
+    return cfg->dev;
+
+	return NULL;
+}
+
+//Initialize the board and check communication
+int GANDALFInit(GANDALFconfig *cfg) {
+	libusb_init(&cfg->ctx);
+	libusb_set_debug(cfg->ctx,3);
+
+	if (findGANDALF(cfg) == NULL) {
+		printf("GANDALF not found");
+		return 0;
+	}
+
+	//From here on GANDALF is OK, start playing with it
+    int err = libusb_open(cfg->dev, &cfg->handle);
+    if (err){
+      printf("Unable to open usb device\n");
+      error();
+    }
+
+    printf("GANDALF opened successfully\n");
+    if ( libusb_kernel_driver_active(cfg->handle,0) ){
+      printf("Device busy...detaching...\n");
+      libusb_detach_kernel_driver(cfg->handle,0);
+      cfg->attached = 1;
+    }else printf("Device free from kernel\n");
+
+    err = libusb_claim_interface( cfg->handle, 0 );
+    if (err){
+      printf( "Failed to claim interface. " );
+      switch( err ){
+      case LIBUSB_ERROR_NOT_FOUND:	printf( "not found\n" );	break;
+      case LIBUSB_ERROR_BUSY:		printf( "busy\n" );		break;
+      case LIBUSB_ERROR_NO_DEVICE:	printf( "no device\n" );	break;
+      default:			printf( "other\n" );		break;
+      }
+      error();
+    }
+
+
+	return 0;
+}
+
+//Confugure the digitizer
+int GANDALFConfig(GANDALFconfig *cfg) {
+
 	listUSBDevices();
+	return 0;
+}
+
+
+//Free all the configuration
+int GANDALFExit(GANDALFconfig *cfg){
+
+	if(cfg->list)
+		libusb_free_device_list( cfg->list, 1);
+	if(cfg->ctx )
+		libusb_exit( cfg->ctx );
+
 	return 0;
 }
