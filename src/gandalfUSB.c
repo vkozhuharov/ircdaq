@@ -100,7 +100,7 @@ int GANDALFFirmwareOK(GANDALFconfig *cfg){
 
 int GANDALFConfigInterfaces(GANDALFconfig *cfg) {
     libusb_get_configuration(cfg->handle,&cfg->cfg);
-    printf("Configuration value %d, %08X\n",cfg,cfg);
+    printf("Configuration value %d, %08X\n",cfg->cfg,cfg->cfg);
 
 
 
