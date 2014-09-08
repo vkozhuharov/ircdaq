@@ -33,6 +33,10 @@ int daq_quit(){
 }
 
 
+void DAQ_exit(){
+	GANDALFExit(&cfg);
+	exit(0);
+}
 
 
 int main(int argc, char *argv[]) {
@@ -63,6 +67,13 @@ int main(int argc, char *argv[]) {
 		exit(0);
 	}
   
+
+	if(daq_quit()){
+	  printf("EXITING\n");
+	  DAQ_exit();
+	}
+
+
 
   // Starting the necessary data processing units
 

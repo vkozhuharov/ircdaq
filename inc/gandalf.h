@@ -55,7 +55,15 @@
 #define GEN_CONF2       0xb08
 
 
+typedef struct AMCcard {
+	int ok;  // enabled or not
+	int bin; // time interval, 1ns or 2ns
+} AMCcard;
 
+typedef struct OMCcard {
+	int ok;  // enabled or not
+
+} OMCcard;
 
 
 //Main structure for GANDALF configuration and communication
@@ -74,8 +82,9 @@ typedef struct GANDALFconfig {
 	short int ga;
 	short int init;
 	int cfg;
-
-
+	int timeout;
+	AMCcard amc[2];
+	OMCcard omc[2];
 
 } GANDALFconfig;
 
