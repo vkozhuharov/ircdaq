@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 //	status = -1;
 //	pstatus = &status;
 
-
+// both repos
 
 	//GANDALF (hardware) configuration
 	res = GANDALFConfig(handle);
