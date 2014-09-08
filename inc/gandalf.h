@@ -64,12 +64,9 @@ typedef struct GANDALFconfig {
 	libusb_device *dev;
 	libusb_context *ctx;
 	libusb_device_handle *handle;
-	const struct libusb_endpoint_descriptor *epdesc;
     const struct libusb_endpoint_descriptor *desc_in;
     const struct libusb_endpoint_descriptor *desc_out;
     struct libusb_config_descriptor *config;
-    const struct libusb_interface_descriptor *interdesc;
-    const struct libusb_interface *inter;
 
 	short int attached;
 	short int sn;

@@ -13,6 +13,10 @@ int GANDALFCleanConfig(GANDALFconfig *cfg){
 	cfg->ctx = NULL;
 	cfg->handle = NULL;
 	cfg->attached = 0;
+
+	//Endpoints cleaning
+	cfg->desc_out = NULL;
+	cfg->desc_in  = NULL;
 	return 0;
 }
 
@@ -99,12 +103,53 @@ int GANDALFFirmwareOK(GANDALFconfig *cfg){
 }
 
 int GANDALFConfigInterfaces(GANDALFconfig *cfg) {
+
+	const struct libusb_endpoint_descriptor *epdesc;
+    const struct libusb_interface_descriptor *interdesc;
+    const struct libusb_interface *inter;
+
+	int i,j,k;
+
     libusb_get_configuration(cfg->handle,&cfg->cfg);
     printf("Configuration value %d, %08X\n",cfg->cfg,cfg->cfg);
 
+    libusb_get_config_descriptor(cfg->dev, 0, &cfg->config);
+    printf("Number of interfaces: %d\n",cfg->config->bNumInterfaces);
+    for(i=0; i<(int)cfg->config->bNumInterfaces; i++) {
+      inter = &cfg->config->interface[i];
+      printf("Number of alternate settings: %d \n", inter->num_altsetting);
+      for(j=0; j<inter->num_altsetting; j++) {
+    	  interdesc = &inter->altsetting[j];
+    	  printf("Interface Number: %d\n",(int)interdesc->bInterfaceNumber);
+    	  printf("Number of endpoints: %d\n",(int)interdesc->bNumEndpoints);
+    	  for(k=0; k<(int)interdesc->bNumEndpoints; k++) {
+    		  epdesc = &interdesc->endpoint[k];
+    		  printf("Descriptor Type: %d\n",(int)epdesc->bDescriptorType);
+    		  printf("EP Address: %X\n",(int)epdesc->bEndpointAddress);
+    		  if( (epdesc->bEndpointAddress == 2) && ((epdesc->bEndpointAddress & 0x80) == LIBUSB_ENDPOINT_OUT )  ) {
+    			  printf("Found output endpoint descriptor at address 2\n");
+    			  //This is an
+    			  cfg->desc_out = epdesc;
+    		  }
+    		  if(((epdesc->bEndpointAddress & 0xF) == 6) && ((epdesc->bEndpointAddress & 0x80) ==LIBUSB_ENDPOINT_IN)  ) {
+    			  printf("Found input endpoint descriptor at address 6\n");
+    			  //This is an
+    			  cfg->desc_in = epdesc;
+    		  }
+    	  }
+      }
+    }
 
-
-	return 0;
+    if (cfg->desc_out == NULL) {
+    	printf("Output endpoint not found\n");
+    	return 0;
+    }
+    if (cfg->desc_in == NULL) {
+    	printf("Input endpoint not found\n");
+    	return 0;
+    }
+    printf("Endpoints for data transfer identified successfully\n");
+	return 1;
 }
 
 
