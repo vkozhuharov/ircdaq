@@ -77,7 +77,7 @@ int GANDALFInit(GANDALFconfig *cfg) {
       error();
     }
 
-	return 0;
+	return 1;
 }
 
 
