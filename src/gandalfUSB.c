@@ -8,6 +8,7 @@
 #include "usbtools.h"
 #include "gandalf.h"
 
+
 int GANDALFCleanConfig(GANDALFconfig *cfg){
 	cfg->dev = NULL;
 	cfg->ctx = NULL;
@@ -289,7 +290,17 @@ int GANDALFGetDATA(GANDALFconfig *cfg,char *data, int maxsize){
 	return transferred;
 }
 
+int GANDALFStartRun(GANDALFconfig *cfg){
+	int val;
+	val = 1;
 
+    sendControlCommand(0x08);
+    usleep(1000);
+
+    writeUSB(0x7034, 2); //load conf
+
+    return 0;
+}
 
 //Free all the configuration
 int GANDALFExit(GANDALFconfig *cfg){

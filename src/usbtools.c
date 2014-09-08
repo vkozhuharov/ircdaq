@@ -75,6 +75,26 @@ unsigned int readUSB(int addr) {
 }
 
 
+int sendControlCommand(int addr){
+  //All the control commands are sent to the cpld
+  //Only the address is needed
+  int timeout = 500; //ms
+  int rcpt;
+  if(addr == 0) {
+    rcpt =LIBUSB_RECIPIENT_ENDPOINT;
+  } else {
+    rcpt = LIBUSB_RECIPIENT_DEVICE;
+  }
+  int bmRequestType = LIBUSB_ENDPOINT_OUT | rcpt | LIBUSB_REQUEST_TYPE_VENDOR;
+  int bRequest = 0x40; // destination: cpld config block
+  int wValue = addr;
+  int wIndex = 0;
+  //  char
+  libusb_control_transfer(cfg.handle,bmRequestType,bRequest, wValue, wIndex, 0, 0, timeout);
+  return 0;
+}
+
+
 int listUSBDevices(){
 	  libusb_device **list;
 	  libusb_context *ctx = NULL;
