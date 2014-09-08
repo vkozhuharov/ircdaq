@@ -92,6 +92,15 @@ int GANDALFFirmwareOK(GANDALFconfig *cfg){
 	printf("-------------------\n");
 	printf( "%4d  %02Xh  %2d  %x\n",
 			cfg->sn, cfg->hex, cfg->ga, cfg->init);
+	if(cfg->init == FIRMWARE_OK)
+		return 1;
+
+	return 0;
+}
+
+int GANDALFConfigInterfaces(GANDALFconfig *cfg) {
+    libusb_get_configuration(cfg->handle,&cfg->cfg);
+    printf("Configuration value %d, %08X\n",cfg,cfg);
 
 
 
@@ -99,12 +108,16 @@ int GANDALFFirmwareOK(GANDALFconfig *cfg){
 }
 
 
-
 //Confugure the digitizer
 int GANDALFConfig(GANDALFconfig *cfg) {
 	if(! GANDALFFirmwareOK(cfg) ) {
 		return 0;
 	}
+	if(!GANDALFConfigInterfaces(cfg) ) {
+		return 0;
+	}
+
+
 	return 0;
 }
 

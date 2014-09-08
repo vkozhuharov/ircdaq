@@ -24,11 +24,17 @@
 #define FRC          0x7000  //Fast register commands offset
 
 
+//GANDALF configuration
+#define FIRMWARE_OK  			0xf
+#define FIRMWARE_NOT_PRESENT  	0xe
+
+
+
 //Fast Register Commands.
 #define DAC_CALIB       0x00c //Values: 0x0, 0x1
 #define TRG_TEMP_RDOUT  0x010
 
-#define EXT_BOS 0x044
+#define EXT_BOS 		0x044
 
 
 //Configuration Memory Registers
@@ -47,6 +53,10 @@
 #define GEN_CONF0       0xb00
 #define GEN_CONF1       0xb04
 #define GEN_CONF2       0xb08
+
+
+
+
 
 //Main structure for GANDALF configuration and communication
 typedef struct GANDALFconfig {
