@@ -5,6 +5,7 @@
  *      Author: veni
  */
 #include <libusb-1.0/libusb.h>
+#include <sys/types.h>
 
 #ifndef GANDALF_H_
 #define GANDALF_H_
@@ -53,7 +54,21 @@ typedef struct GANDALFconfig {
 	libusb_device *dev;
 	libusb_context *ctx;
 	libusb_device_handle *handle;
-	int attached;
+	const struct libusb_endpoint_descriptor *epdesc;
+    const struct libusb_endpoint_descriptor *desc_in;
+    const struct libusb_endpoint_descriptor *desc_out;
+    struct libusb_config_descriptor *config;
+    const struct libusb_interface_descriptor *interdesc;
+    const struct libusb_interface *inter;
+
+	short int attached;
+	short int sn;
+	short int hex;
+	short int ga;
+	short int init;
+	short int cfg;
+
+
 
 } GANDALFconfig;
 

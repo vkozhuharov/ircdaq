@@ -43,14 +43,19 @@ int main(int argc, char *argv[]) {
 	//Reset the things
 	res = GANDALFCleanConfig(&cfg);
 
+
 	//Initialize the board
 	res = GANDALFInit(&cfg);
 
+	if (res < 1) {
+		//error("No GANDALF found:   \n");
+		printf("No GANDALF found \n");
+		exit(0);
+	}
+
+
 	//GANDALF (hardware) configuration
 	res = GANDALFConfig(&cfg);
-
-
-
 
 
 	if (res < 1) {

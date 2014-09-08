@@ -12,6 +12,7 @@ int GANDALFCleanConfig(GANDALFconfig *cfg){
 	cfg->dev = NULL;
 	cfg->ctx = NULL;
 	cfg->handle = NULL;
+	cfg->attached = 0;
 	return 0;
 }
 
@@ -38,11 +39,13 @@ libusb_device * findGANDALF(GANDALFconfig *cfg) {
 
 //Initialize the board and check communication
 int GANDALFInit(GANDALFconfig *cfg) {
+	listUSBDevices();
+
 	libusb_init(&cfg->ctx);
 	libusb_set_debug(cfg->ctx,3);
 
 	if (findGANDALF(cfg) == NULL) {
-		printf("GANDALF not found");
+		printf("GANDALF not found\n");
 		return 0;
 	}
 
@@ -52,14 +55,16 @@ int GANDALFInit(GANDALFconfig *cfg) {
       printf("Unable to open usb device\n");
       error();
     }
-
     printf("GANDALF opened successfully\n");
+
+    //Try to detach the device before opening it
     if ( libusb_kernel_driver_active(cfg->handle,0) ){
       printf("Device busy...detaching...\n");
       libusb_detach_kernel_driver(cfg->handle,0);
       cfg->attached = 1;
     }else printf("Device free from kernel\n");
 
+    //Let's see if we can finally claim the device for us
     err = libusb_claim_interface( cfg->handle, 0 );
     if (err){
       printf( "Failed to claim interface. " );
@@ -72,20 +77,46 @@ int GANDALFInit(GANDALFconfig *cfg) {
       error();
     }
 
+	return 0;
+}
+
+
+
+int GANDALFFirmwareOK(GANDALFconfig *cfg){
+	int val = readUSB(BOARDSTATUS);
+	cfg->sn = val & 0x3FF;
+	cfg->hex = (val>>20) & 0xFF;
+	cfg->ga = (val>>12) & 0x1F;
+	cfg->init = (val>>28) & 0xF;
+	printf("  SN  HEX  GA  INIT\n");
+	printf("-------------------\n");
+	printf( "%4d  %02Xh  %2d  %x\n",
+			cfg->sn, cfg->hex, cfg->ga, cfg->init);
+
+
 
 	return 0;
 }
+
+
 
 //Confugure the digitizer
 int GANDALFConfig(GANDALFconfig *cfg) {
-
-	listUSBDevices();
+	if(! GANDALFFirmwareOK(cfg) ) {
+		return 0;
+	}
 	return 0;
 }
+
 
 
 //Free all the configuration
 int GANDALFExit(GANDALFconfig *cfg){
+    //if we detached kernel driver, reattach.
+    if( cfg->attached == 1 ){
+      libusb_attach_kernel_driver( cfg->handle, 0 );
+    }
+    libusb_close( cfg->handle );
 
 	if(cfg->list)
 		libusb_free_device_list( cfg->list, 1);
