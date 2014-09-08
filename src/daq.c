@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
 	int res;
 	//Configuration part
   
-	status = -1;
-	pstatus = &status;
+//	status = -1;
+//	pstatus = &status;
 
 
 
