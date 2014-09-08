@@ -36,8 +36,8 @@ int getData( int fdout ) {
 //		  i = 0;
 //	  sleep(1);
 	  nbytes = GANDALFGetDATA(&cfg, buf, 100);
-	  printf("Transferred %d bytes\n",nbytes);
-	  if (nbytes > 0) write(fdout,buf,nbytes);
+	  if (nbytes > 0) printf("Transferred %d bytes\n",nbytes);
+	  write(fdout,buf,nbytes);
 
   }
   printf("Closing the output buffer.... ");
