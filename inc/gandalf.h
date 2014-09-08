@@ -73,7 +73,7 @@ typedef struct GANDALFconfig {
 	short int hex;
 	short int ga;
 	short int init;
-	short int cfg;
+	int cfg;
 
 
 

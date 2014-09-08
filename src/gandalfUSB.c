@@ -131,6 +131,13 @@ int GANDALFConfigInterfaces(GANDALFconfig *cfg) {
     			  //This is an
     			  cfg->desc_out = epdesc;
     		  }
+    		  if( ((epdesc->bEndpointAddress & 0x80) == LIBUSB_ENDPOINT_OUT )  ) {
+    			  printf("Found output endpoint descriptor at address %d\n",epdesc->bEndpointAddress);
+    		  }
+    		  if( ((epdesc->bEndpointAddress & 0x80) == LIBUSB_ENDPOINT_IN )  ) {
+    			  printf("Found input endpoint descriptor at address %d\n",epdesc->bEndpointAddress);
+    		  }
+
     		  if(((epdesc->bEndpointAddress & 0xF) == 6) && ((epdesc->bEndpointAddress & 0x80) ==LIBUSB_ENDPOINT_IN)  ) {
     			  printf("Found input endpoint descriptor at address 6\n");
     			  //This is an
