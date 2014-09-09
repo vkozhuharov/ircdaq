@@ -25,9 +25,10 @@ int is_usbdevblock( libusb_device *dev,int vid,int pid )
 	return 0;
 }
 
-int array2int(char a[4]) {
+int array2int(char *a) {
   return a[0]<<24 | a[1]<<16 | a[2]<<8 | a[3];
 }
+
 int int2array(int i,char a[4]) {
   a[0] =  i>>24 & 0xFF;
   a[1] =  i>>16 & 0xFF;

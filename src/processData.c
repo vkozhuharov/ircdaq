@@ -6,6 +6,7 @@ int processData(int fdin, int fdout) {
   char buf[128];
 
   int tmp;
+  int word;
 
   printf("Data processing thread started, PID:  %d, PPID: %d \n",getpid(), getppid());
 
@@ -15,7 +16,8 @@ int processData(int fdin, int fdout) {
   
 //  while((res = read(fdin,buf,4)) > 0 ) {
   while((res = read(fdin,&tmp,4)) == 4 ) {
-	  printf("DATA: %08x\n",tmp);
+	  word = array2int((char *) &tmp);
+	  printf("DATA: %08x \t %08x \n",tmp, word);
 
 
 
