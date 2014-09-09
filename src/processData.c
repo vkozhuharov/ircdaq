@@ -26,6 +26,7 @@ int processData(int fdin, int fdout) {
 	  word = swap(tmp);
 	 // printf("DATA: %08x \t %08x \n",tmp, word);
 
+	 //test of git
 
 
     //buf[0] = toupper(buf[0]);
