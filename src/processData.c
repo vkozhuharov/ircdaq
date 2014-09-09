@@ -15,7 +15,7 @@ int processData(int fdin, int fdout) {
   
 //  while((res = read(fdin,buf,4)) > 0 ) {
   while((res = read(fdin,&tmp,4)) == 4 ) {
-	  printf("DATA: %08x\n",buf);
+	  printf("DATA: %08x\n",tmp);
 
 
 
