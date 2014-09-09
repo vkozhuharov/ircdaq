@@ -13,7 +13,9 @@
 #include <stdio.h>
 
 int is_usbdevblock( libusb_device *dev,int,int );
-uint32_t array2int(char *a);
+uint32_t array2uint(char *a);
+int array2int(char a[4]);
+
 int int2array(int i,char a[4]);
 
 int writeUSB(int addr,int val);
