@@ -5,6 +5,7 @@
  *      Author: veni
  */
 
+#ifdef USE_GANDALF
 #include "usbtools.h"
 #include "gandalf.h"
 
@@ -317,3 +318,4 @@ int GANDALFExit(GANDALFconfig *cfg){
 
 	return 0;
 }
+#endif

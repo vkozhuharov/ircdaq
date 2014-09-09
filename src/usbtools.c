@@ -6,11 +6,12 @@
  */
 
 #include "usbtools.h"
+#ifdef USE_GANDALF
 #include "gandalf.h"
 
 //extern void *handle;
 extern GANDALFconfig cfg;
-
+#endif
 
 int is_usbdevblock( libusb_device *dev,int vid,int pid )
 {
@@ -35,6 +36,7 @@ int int2array(int i,char a[4]) {
   return i;
 }
 
+#ifdef USE_GANDALF
 
 int writeUSB(int addr,int val) {
   char a[4];
@@ -93,7 +95,7 @@ int sendControlCommand(int addr){
   libusb_control_transfer(cfg.handle,bmRequestType,bRequest, wValue, wIndex, 0, 0, timeout);
   return 0;
 }
-
+#endif
 
 int listUSBDevices(){
 	  libusb_device **list;

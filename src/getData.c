@@ -4,10 +4,15 @@
 #include <unistd.h>
 #include <sys/prctl.h>
 #include <signal.h>
-#include "gandalf.h"
 
-extern int *pstatus;
+#ifdef USE_GANDALF
+#include "gandalf.h"
 extern GANDALFconfig cfg;
+#endif
+
+//extern int *pstatus;
+
+
 
 int getData( int fdout ) {
 
@@ -16,7 +21,7 @@ int getData( int fdout ) {
   int state;
   int nbytes; //
 
-  printf("getData: Status pointer: %x\n",pstatus);
+//  printf("getData: Status pointer: %x\n",pstatus);
 
 
   printf("Data retrieval thread started, PID:  %d, PPID: %d \n",getpid(), getppid());
@@ -35,9 +40,17 @@ int getData( int fdout ) {
 //	  if(state == 1)
 //		  i = 0;
 //	  sleep(1);
+#ifdef USE_GANDALF
 	  nbytes = GANDALFGetDATA(&cfg, buf, 100);
 	  if (nbytes > 0) printf("Transferred %d bytes\n",nbytes);
 	  write(fdout,buf,nbytes);
+#else
+	  sprintf (buf,"Thread 1 alive: %d\n",i++);
+	  write(fdout,buf,strlen(buf));
+
+	  sleep(1);
+#endif
+
 
   }
   printf("Closing the output buffer.... ");

@@ -10,16 +10,19 @@
 #include <fcntl.h>              /* Obtain O_* constant definitions */
 
 #include "daq.h"
-#include "gandalf.h"
+#ifdef USE_GANDALF
 
-int status;
-int *pstatus;
+#include "gandalf.h"
+GANDALFconfig cfg;
+#endif
+
+//int status;
+//int *pstatus;
 
 //libusb_device_handle *handle=NULL;
 
-void *handle=NULL;
+//void *handle=NULL;
 
-GANDALFconfig cfg;
 
 
 int daq_quit(){
@@ -34,7 +37,11 @@ int daq_quit(){
 
 
 void DAQ_exit(){
+#ifdef USE_GANDALF
+
 	GANDALFExit(&cfg);
+#endif
+
 	exit(0);
 }
 
@@ -43,6 +50,7 @@ int main(int argc, char *argv[]) {
 	int res;
 	//Configuration part
 
+#ifdef USE_GANDALF
 
 	//Reset the things
 	res = GANDALFCleanConfig(&cfg);
@@ -64,6 +72,7 @@ int main(int argc, char *argv[]) {
 		printf("No GANDALF found \n");
 		exit(0);
 	}
+#endif
 
 
 	if(daq_quit()){

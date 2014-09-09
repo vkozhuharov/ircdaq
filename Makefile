@@ -20,8 +20,9 @@ LIBS     = $(SYSLIBS)  -L$(DIMDIR)/linux -ldim -lpthread  -L -lconthost -lusb-1.
 #LIBS     = $(SYSLIBS) -lusb-1.0 -L$(DIMDIR)/linux -ldim -lpthread  -L -lconthost
 
 #-lconthost
-
-DEFINES  = -DUSE_DIM -I$(DIMDIR)/dim
+DEFINES  = 
+DEFINES  += -DUSE_DIM -I$(DIMDIR)/dim
+DEFINES  += -DUSE_GANDALF
 
 CPPFLAGS = -I. -I$(INCDIR) $(DEFINES)
 CFLAGS = 

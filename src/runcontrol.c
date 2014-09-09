@@ -19,7 +19,7 @@
 #define STATE_READY		2
 
 
-extern int *pstatus;
+//extern int *pstatus;
 static int state;
 
 //This function has to be rewritten - not safe!
@@ -106,7 +106,7 @@ int SelectCommand(char commandName[STRING_MAX_LENGTH], char tok[5][STRING_MAX_LE
 	}
 
 	printf("Going to state: %d\n",state);
-	*pstatus = state;
+	//*pstatus = state;
 	dis_update_service(idState);
 	return 0;
 }
@@ -200,7 +200,7 @@ int runControlDIM(){
 	//Connecting them to DIM
 	dis_start_serving(dimServerName);
 
-	printf("runcontrol: Status pointer: %x\n",pstatus);
+	//printf("runcontrol: Status pointer: %x\n",pstatus);
 
 	state = 0;
 	//*pstatus = state;
@@ -224,8 +224,9 @@ int runControlDAQ(){
 
 int runControl(){
 	//prctl(PR_SET_PDEATHSIG, SIGHUP);
+	  printf("RunControl thread started, PID:  %d, PPID: %d \n",getpid(), getppid());
 	state = -1;
-//	*pstatus = state;
+	//*pstatus = state;
 #ifdef USE_DIM
 	printf("Using central DIM service\n");
 	runControlDIM();
