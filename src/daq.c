@@ -57,10 +57,8 @@ int main(int argc, char *argv[]) {
 		exit(0);
 	}
 
-
 	//GANDALF (hardware) configuration
 	res = GANDALFConfig(&cfg);
-
 
 	if (res < 1) {
 		printf("No GANDALF found \n");

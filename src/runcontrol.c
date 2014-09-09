@@ -227,8 +227,10 @@ int runControl(){
 	state = -1;
 	*pstatus = state;
 #ifdef USE_DIM
+	printf("Using central DIM service\n");
 	runControlDIM();
 #else
+	printf("Standalone run control");
 	runControlDAQ();
 #endif
 
