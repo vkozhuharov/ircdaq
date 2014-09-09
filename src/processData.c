@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "usbtools.h"
 
 int processData(int fdin, int fdout) {
   int i=0;

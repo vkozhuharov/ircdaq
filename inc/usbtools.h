@@ -12,14 +12,12 @@
 #include <stdio.h>
 
 int is_usbdevblock( libusb_device *dev,int,int );
-int array2int(char a[4]);
+unsigned int array2int(char a[4]);
 int int2array(int i,char a[4]);
 
 int writeUSB(int addr,int val);
 unsigned int readUSB(int addr);
 int listUSBDevices();
-
-
 
 
 
