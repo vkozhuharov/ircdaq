@@ -11,6 +11,10 @@
 
 //typedef uint32_t  int
 
+#define USBTRANSFER_TIMEOUT 50  //in miliseconds!
+#define MAXDATA 100000000       //in bytes
+
+//#define
 
 
 

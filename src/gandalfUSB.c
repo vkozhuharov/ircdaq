@@ -19,7 +19,7 @@ int GANDALFCleanConfig(GANDALFconfig *cfg){
 	//Endpoints cleaning
 	cfg->desc_out = NULL;
 	cfg->desc_in  = NULL;
-	cfg->timeout = 100; //ms
+	cfg->timeout = USBTRANSFER_TIMEOUT; //ms
 	return 0;
 }
 

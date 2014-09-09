@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/prctl.h>
 #include <signal.h>
+#include "globals.h"
 
 #ifdef USE_GANDALF
 #include "gandalf.h"
@@ -12,7 +13,6 @@ extern GANDALFconfig cfg;
 
 //extern int *pstatus;
 
-#define MAXDATA 100000000
 
 int getData( int fdout ) {
 
@@ -45,7 +45,7 @@ int getData( int fdout ) {
 	  if (nbytes > 0)
 		  printf("Transferred %d bytes\n",nbytes);
 	  write(fdout,buf,nbytes);
-	  //sleep(1);
+	  usleep(USBTRANSFER_TIMEOUT*1000);
 
 #else
 	  sprintf (buf,"Thread 1 alive: %d\n",i++);
