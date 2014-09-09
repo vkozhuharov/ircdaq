@@ -7,9 +7,9 @@ int processData(int fdin, int fdout) {
   char buf[128];
 
   uint32_t tmp;
-//  uint32_t word;
+  uint32_t word;
 
-  unsigned int word;
+  //unsigned int word;
 
   printf("Data processing thread started, PID:  %d, PPID: %d \n",getpid(), getppid());
 
@@ -18,7 +18,7 @@ int processData(int fdin, int fdout) {
   int res;
   
   //  while((res = read(fdin,buf,4)) > 0 ) {
-  while((res = read(fdin,&tmp, 4 )) == 4 ) {
+  while((res = read(fdin, &tmp, 4 )) == 4 ) {
 	  //tmp = buf[0] << 24
 	  //word = array2int((char *) &tmp);
 	  //word = array2int(buf);
