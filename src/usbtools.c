@@ -36,10 +36,10 @@ int array2int(char a[4]) {
 }
 
 int swap(int a){
-	return ( (a && 0xFF) <<24 ) |
-			( (a >> 8 && 0xFF ) << 16 )|
-			( (a >> 16 && 0xFF ) << 8) |
-			( (a >> 24 ) && 0xFF)  ;
+	return ( (a & 0xFF) <<24 ) |
+				( ((a >>  8) & 0xFF ) << 16 )|
+				( ((a >> 16) & 0xFF ) << 8) |
+				( ((a >> 24) & 0xFF ) )  ;
 }
 
 int int2array(int i,char a[4]) {
