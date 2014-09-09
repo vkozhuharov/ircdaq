@@ -23,13 +23,13 @@ GANDALFconfig cfg;
 
 
 int daq_quit(){
-  if( access( "quit", F_OK ) != -1 ) {
-    // file exists
-    return 1;
-  } else {
-    // file doesn't exist
-    return 0;
-  }
+	if( access( "quit", F_OK ) != -1 ) {
+		// file exists
+		return 1;
+	} else {
+		// file doesn't exist
+		return 0;
+	}
 }
 
 
@@ -66,135 +66,136 @@ int main(int argc, char *argv[]) {
 		printf("No GANDALF found \n");
 		exit(0);
 	}
-  
+
 
 	if(daq_quit()){
-	  printf("EXITING\n");
-	  DAQ_exit();
+		printf("EXITING\n");
+		DAQ_exit();
 	}
 
 
 
 
 
-  // Starting the necessary data processing units
+	// Starting the necessary data processing units
 
-  int rawdata[2];
+	int rawdata[2];
 
-  printf("Creating INPUT data flow FIFO ..... ");
+	printf("Creating INPUT data flow FIFO ..... ");
 
-  if( pipe(rawdata) == -1) {
-    //perror("pipe");
-    printf("FAIL\n");
-    exit(EXIT_FAILURE);
-  }
-  printf("DONE\n");
+	if( pipe(rawdata) == -1) {
+		//perror("pipe");
+		printf("FAIL\n");
+		exit(EXIT_FAILURE);
+	}
+	printf("DONE\n");
 
-  pid_t pth1;
-  pth1 = fork();
-  
-  //printf("FORK result: process 1 with ID: %d\n",pth1);
+	pid_t pth1;
+	pth1 = fork();
 
-  if(pth1 == -1) {
-    perror("pipe");
-    exit(EXIT_FAILURE);  
-  }
-  
-  // printf("Process with PID %d working\n",getpid());
-  // printf("Process with parrent PID %d working\n",getppid());
-  if(pth1 == 0) {
-    // We are int the child process now 
-    // writing data to the pipe, close the unused read end:
+	//printf("FORK result: process 1 with ID: %d\n",pth1);
 
-    close(rawdata[0]);
-    getData( rawdata[1] );
-    
-  }
-  if(pth1 > 0 ) {
-    // We are in the parent process
-    //First close the unused write end of the pipe of th1:
-    close(rawdata[1]);
-    
-    pid_t pth2;
-    int readydata[2];
+	if(pth1 == -1) {
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
 
-    printf("Creating OUTPUT data flow FIFO ..... ");
-    if( pipe(readydata) == -1) {
-      //perror("pipe");
-      printf("FAIL\n");
-      exit(EXIT_FAILURE);
-    }
-    printf("DONE\n");
+	// printf("Process with PID %d working\n",getpid());
+	// printf("Process with parrent PID %d working\n",getppid());
+	if(pth1 == 0) {
+		// We are int the child process now
+		// writing data to the pipe, close the unused read end:
 
+		close(rawdata[0]);
+		getData( rawdata[1] );
 
-    pth2 = fork();
-    //  printf("FORK result: process 2 with ID: %d\n",pth1);
+	}
+	if(pth1 > 0 ) {
+		// We are in the parent process
+		//First close the unused write end of the pipe of th1:
+		close(rawdata[1]);
 
-    if(pth2 == -1) {
-      perror("pipe");
-    }
-    
-    //   printf("Process with PID %d working\n",getpid());
-    //  printf("Process with parrent PID %d working\n",getppid());
-    
-    if(pth2 == 0) {
-      // We are in the child process now 
-      close(readydata[0]);
-      processData(rawdata[0],readydata[1]);
-    }
-    
-    
-    if(pth2 > 0 ) {
-      // We are in the parent process
-      //We do not need any FIFO fd here
-      close(readydata[1]);
-      close(rawdata[0]);
+		pid_t pth2;
+		int readydata[2];
 
-      pid_t pth3;
-      
-      pth3 = fork();
-      //printf("FORK result: process 3 with ID: %d\n",pth1);
-
-      if(pth3 == -1) {
-	perror("pipe");
-      }
-      
-      /* printf("Process with PID %d working\n",getpid()); */
-      /* printf("Process with parrent PID %d working\n",getppid()); */
-      
-      if(pth3 == 0) {
-	// We are in the child process now
-	sendData(readydata[0]);
-      }
-      
-      
-      if(pth3 > 0 ) {
-	// We are in the parent process
-    	 close(readydata[0]);
-
-    	 pid_t pth4;
-    	 //Configuration thread
-    	 pth4 = fork();
-         if(pth4 == -1) {
-        	 perror("thread4");
-         }
-         if(pth4 == 0) {
-        	 runControl();
-         }
-         if(pth4 > 0 ) {
-   	// We are in the parent process
+		printf("Creating OUTPUT data flow FIFO ..... ");
+		if( pipe(readydata) == -1) {
+			//perror("pipe");
+			printf("FAIL\n");
+			exit(EXIT_FAILURE);
+		}
+		printf("DONE\n");
 
 
-	int status;
-	pid_t p;
-	//    wait(NULL);
-	p = waitpid(pth3,&status,0); 
-	printf("PID Status: %d, ERRNO: %d\n",WEXITSTATUS(status) , errno);
-	printf("Child thread %d finished, better exit\n",pth3); 
-         }
-      }
-    }
-  }
-  
-  
+		pth2 = fork();
+		//  printf("FORK result: process 2 with ID: %d\n",pth1);
+
+		if(pth2 == -1) {
+			perror("pipe");
+		}
+
+		//   printf("Process with PID %d working\n",getpid());
+		//  printf("Process with parrent PID %d working\n",getppid());
+
+		if(pth2 == 0) {
+			// We are in the child process now
+			close(readydata[0]);
+			processData(rawdata[0],readydata[1]);
+		}
+
+
+		if(pth2 > 0 ) {
+			// We are in the parent process
+			//We do not need any FIFO fd here
+			close(readydata[1]);
+			close(rawdata[0]);
+
+			pid_t pth3;
+
+			pth3 = fork();
+			//printf("FORK result: process 3 with ID: %d\n",pth1);
+
+			if(pth3 == -1) {
+				perror("pipe");
+			}
+
+			/* printf("Process with PID %d working\n",getpid()); */
+			/* printf("Process with parrent PID %d working\n",getppid()); */
+
+			if(pth3 == 0) {
+				// We are in the child process now
+				sendData(readydata[0]);
+			}
+
+
+			if(pth3 > 0 ) {
+				// We are in the parent process
+				close(readydata[0]);
+
+				pid_t pth4;
+				//Configuration thread
+				printf("Starting the control thread\n");
+				pth4 = fork();
+				if(pth4 == -1) {
+					perror("thread4");
+				}
+				if(pth4 == 0) {
+					runControl();
+				}
+				if(pth4 > 0 ) {
+					// We are in the parent process
+
+
+					int status;
+					pid_t p;
+					//    wait(NULL);
+					p = waitpid(pth3,&status,0);
+					printf("PID Status: %d, ERRNO: %d\n",WEXITSTATUS(status) , errno);
+					printf("Child thread %d finished, better exit\n",pth3);
+				}
+			}
+		}
+	}
+
+
 }

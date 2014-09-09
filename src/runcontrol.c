@@ -215,27 +215,11 @@ int runControlDIM(){
 	return 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+#else
+int runControlDAQ(){
+	return 0;
+}
 #endif
-
-
-
-
-
-
-
 
 
 int runControl(){
