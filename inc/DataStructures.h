@@ -29,7 +29,7 @@ struct rawEvent{
 	uint8_t  evN;
 	uint8_t flag;
 	uint32_t timestamp;
-	uint16_t sample[8];
+	uint32_t sample[8];
 } __attribute__ ((__packed__)) ;
 
 struct MEP {

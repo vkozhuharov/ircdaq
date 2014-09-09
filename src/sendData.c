@@ -56,13 +56,20 @@ int sendData(int fdin) {
 	  printf("DATA:  %08x \n", word);
     write(fout,buf,res);
 
-    if(1) {
-    	sendDataToPCFarm(&mep,mep.hdr.mepLength);
-    	mep.hdr.firstEventNum += 0;
-    }
+
+
+    //Received complete event:
+
+//    if(1) {
+//    	sendDataToPCFarm(&mep,mep.hdr.mepLength);
+//    	mep.hdr.firstEventNum += 0;
+//    }
 
   }
   
+
+
+
   //Exit since the buffer is over
   printf("EOF received: terminate the output....");
   close(fout);

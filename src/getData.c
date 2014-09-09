@@ -45,12 +45,11 @@ int getData( int fdout ) {
 	  if (nbytes > 0)
 		  printf("Transferred %d bytes\n",nbytes);
 	  write(fdout,buf,nbytes);
-	  usleep(USBTRANSFER_TIMEOUT*1000);
+	  usleep(USBTRANSFER_TIMEOUT*1000*2);
 
 #else
 	  sprintf (buf,"Thread 1 alive: %d\n",i++);
 	  write(fdout,buf,strlen(buf));
-
 	  sleep(1);
 #endif
 

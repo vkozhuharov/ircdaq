@@ -13,7 +13,7 @@
 
 #define USBTRANSFER_TIMEOUT 50  //in miliseconds!
 #define MAXDATA 100000000       //in bytes
-
+#define MAX_EV_SIZE 100000      //in 32 bit words
 //#define
 
 

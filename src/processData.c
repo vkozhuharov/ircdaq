@@ -1,9 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 #include "usbtools.h"
+#include "DataStructures.h"
+#include "gandalfData.h"
+
+
+static struct rawEvent evt;
+static struct GANRawEvent ganEvt;
 
 int processData(int fdin, int fdout) {
   int i=0;
+  int evsize=0;
   char buf[128];
 
   uint32_t tmp;
@@ -19,18 +26,55 @@ int processData(int fdin, int fdout) {
   
   //  while((res = read(fdin,buf,4)) > 0 ) {
   while((res = read(fdin, &tmp, 4 )) == 4 ) {
-	  //tmp = buf[0] << 24
-	  //word = array2int((char *) &tmp);
-	  //word = array2int(buf);
+	  tmp = swap(tmp);
+	  //wait for the beginning of some event.
+	  if ( tmp != GAN_EV_START) continue;
+	  //Now we have the start of the event here, let's get the rest
+	  //The three header words of the SLINK header
+	  memcpy(&tmp,&ganEvt.beg,4);
+	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  memcpy(&tmp,&ganEvt.slhdr,4);
+	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  memcpy(&tmp,((char *) &ganEvt.slhdr)  + 4 , 4);
+	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  memcpy(&tmp,((char *) &ganEvt.slhdr)  + 4 , 4);
 
-	  word = swap(tmp);
+	  printf("Received new event with size %d\n",ganEvt.slhdr.evSize);
+	  if(ganEvt.slhdr.evSize > MAX_EV_SIZE) {
+		  printf("*******ERROR*******: please increase the event size\n");
+	  }
+
+	  for(i=0;(i<ganEvt.slhdr.evSize-3) && (i<MAX_EV_SIZE);i++){
+		  read(fdin, &tmp, 4 ); tmp=swap(tmp);
+		  ganEvt.data[i] = tmp;
+	  }
+	  //Skip the rest of the event that we cannot put in the buffer
+	  for(i=0;i<ganEvt.slhdr.evSize-3;i++){
+		  read(fdin, &tmp, 4 );
+	  }
+
+	  read(fdin, &tmp, 4 ); tmp=swap(tmp);
+	  memcpy(&tmp,&ganEvt.end,4);
+
+	  if(ganEvt.end.cfed != GAN_EOV_CHECK) {
+		  printf("Received corrupted event ..... SKIPPING\n");
+		  continue;
+	  }
+
+	  //Prepare the event to be sent to the DataSending module
+
+	 evsize = convertGanEvent(&ganEvt,&evt);
+
+//	  word = swap(tmp);
 	 // printf("DATA: %08x \t %08x \n",tmp, word);
 
-
+	  //	  decodeGandalEvent();
 
     //buf[0] = toupper(buf[0]);
     //write(fdout,buf,res);
-    write(fdout,&word,res);
+    //write(fdout,&word,res);
+	 write(fdout,&evt,evsize);
+
  }
 
   //Exit since the buffer is over
