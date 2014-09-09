@@ -223,9 +223,9 @@ int runControlDAQ(){
 
 
 int runControl(){
-	prctl(PR_SET_PDEATHSIG, SIGHUP);
+	//prctl(PR_SET_PDEATHSIG, SIGHUP);
 	state = -1;
-	*pstatus = state;
+//	*pstatus = state;
 #ifdef USE_DIM
 	printf("Using central DIM service\n");
 	runControlDIM();
