@@ -12,12 +12,12 @@ extern GANDALFconfig cfg;
 
 //extern int *pstatus;
 
-
+#define MAXDATA 100000000
 
 int getData( int fdout ) {
 
   int i=0;
-  char buf[128];
+  char buf[MAXDATA];
   int state;
   int nbytes; //
 
@@ -41,7 +41,7 @@ int getData( int fdout ) {
 //		  i = 0;
 //	  sleep(1);
 #ifdef USE_GANDALF
-	  nbytes = GANDALFGetDATA(&cfg, buf, 100);
+	  nbytes = GANDALFGetDATA(&cfg, buf, MAXDATA);
 	  //if (nbytes > 0)
 		  printf("Transferred %d bytes\n",nbytes);
 	  write(fdout,buf,nbytes);
