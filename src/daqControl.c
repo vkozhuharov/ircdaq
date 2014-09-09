@@ -25,6 +25,9 @@ int StartRun(char *pars){
 }
 
 int EndRun(char *pars){
+#ifdef USE_GANDALF
+	GANDALFEndRun(&cfg);
+#endif
 
 
 	return 0;

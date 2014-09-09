@@ -13,8 +13,7 @@ int processData(int fdin, int fdout) {
   
   while((res = read(fdin,buf,1)) > 0 ) {
 
-    buf[0] = toupper(buf[0]);
-
+    //buf[0] = toupper(buf[0]);
     write(fdout,buf,res);
   }
 

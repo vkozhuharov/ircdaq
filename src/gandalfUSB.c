@@ -300,8 +300,25 @@ int GANDALFStartRun(GANDALFconfig *cfg){
 
     writeUSB(0x7034, 2); //load conf
 
+    writeUSB(0x7044, 2); //BOS
+
+
     return 0;
 }
+
+int GANDALFEndRun(GANDALFconfig *cfg){
+	int val;
+	val = 1;
+
+	//Send EOB
+	writeUSB(0x7048, 2);
+	usleep(100000);
+	sendControlCommand(0x08);
+	usleep(100000);
+
+	return 0;
+}
+
 
 //Free all the configuration
 int GANDALFExit(GANDALFconfig *cfg){
