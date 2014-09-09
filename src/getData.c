@@ -45,7 +45,7 @@ int getData( int fdout ) {
 	 // if (nbytes > 0)
 		  printf("Transferred %d bytes\n",nbytes);
 	  write(fdout,buf,nbytes);
-	  sleep(1);
+	  //sleep(1);
 
 #else
 	  sprintf (buf,"Thread 1 alive: %d\n",i++);
