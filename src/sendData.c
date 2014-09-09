@@ -23,6 +23,7 @@ int sendData(int fdin) {
   int res;
   int fout;
   char fname[256];
+  uint32_t word;
 
   printf("Data sending thread started, PID:  %d, PPID: %d \n",getpid(), getppid());
 
@@ -49,8 +50,10 @@ int sendData(int fdin) {
   mep.hdr.firstEventNum = 0;
 
 
-  while((res = read(fdin,buf,2)) > 0 ) {
+//  while((res = read(fdin,buf,4)) > 0 ) {
+  while((res = read(fdin,&word,4)) > 0 ) {
 	//putchar(buf[0]);
+	  printf("DATA:  %08x \n", word);
     write(fout,buf,res);
 
     if(1) {

@@ -341,9 +341,9 @@ int GANDALFEndRun(GANDALFconfig *cfg){
 
 	//Send EOB
 	writeUSB(0x7048, 2);
-	usleep(100000);
+	usleep(1000000);
 	sendControlCommand(0x08);
-	usleep(100000);
+	usleep(1000000);
 
 	return 0;
 }

@@ -24,13 +24,14 @@ int processData(int fdin, int fdout) {
 	  //word = array2int(buf);
 
 	  word = swap(tmp);
-	  printf("DATA: %08x \t %08x \n",tmp, word);
+	 // printf("DATA: %08x \t %08x \n",tmp, word);
 
 
 
     //buf[0] = toupper(buf[0]);
-    write(fdout,buf,res);
-  }
+    //write(fdout,buf,res);
+    write(fdout,&word,res);
+ }
 
   //Exit since the buffer is over
   printf("EOF received: terminate the processing ....");

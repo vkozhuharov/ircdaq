@@ -42,7 +42,7 @@ int getData( int fdout ) {
 //	  sleep(1);
 #ifdef USE_GANDALF
 	  nbytes = GANDALFGetDATA(&cfg, buf, MAXDATA);
-	 // if (nbytes > 0)
+	  if (nbytes > 0)
 		  printf("Transferred %d bytes\n",nbytes);
 	  write(fdout,buf,nbytes);
 	  //sleep(1);
