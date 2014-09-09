@@ -1,5 +1,6 @@
 #ifndef _DAQ_H_
 #define _DAQ_H_
+#include "globals.h"
 
 
 int getData(int fd);

@@ -9,6 +9,7 @@
 #define DATASTRUCTURES_H_
 #include <sys/types.h>
 #include <stdint.h>
+#include "globals.h"
 
 #define MAX_N_EVENTS 1
 

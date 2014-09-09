@@ -31,6 +31,8 @@ uint32_t array2int(char *a ) {
 	return b;
 }
 
+
+
 int int2array(int i,char a[4]) {
   a[0] =  i>>24 & 0xFF;
   a[1] =  i>>16 & 0xFF;

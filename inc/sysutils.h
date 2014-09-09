@@ -10,6 +10,7 @@
 #include  <time.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#include "globals.h"
 
 
 double time_diff(struct timeval *t1,struct timeval *t2);

@@ -6,6 +6,7 @@
  */
 #include <libusb-1.0/libusb.h>
 #include <sys/types.h>
+#include "globals.h"
 
 #ifndef GANDALF_H_
 #define GANDALF_H_

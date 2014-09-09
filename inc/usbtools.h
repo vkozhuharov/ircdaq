@@ -7,12 +7,13 @@
 
 #ifndef USBTOOLS_H_
 #define USBTOOLS_H_
+#include "globals.h"
 
 #include <libusb-1.0/libusb.h>
 #include <stdio.h>
 
 int is_usbdevblock( libusb_device *dev,int,int );
-unsigned int array2int(char a[4]);
+uint32_t array2int(char *a);
 int int2array(int i,char a[4]);
 
 int writeUSB(int addr,int val);
