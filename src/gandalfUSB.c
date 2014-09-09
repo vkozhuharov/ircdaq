@@ -293,12 +293,12 @@ int GANDALFGetDATA(GANDALFconfig *cfg,char *data, int maxsize){
 //         if	the control request was	not supported, LIBUSB_ERROR_OVERFLOW if	the
 //         device offered more data, LIBUSB_ERROR_NO_DEVICE if the device has	been
 //         disconnected and a	LIBUSB_ERROR code on other failure.
-    printf("Bulk transfer result: %d\n",res);
+    // printf("Bulk transfer result: %d\n",res);
     switch (res) {
     case 0:
     	break;
     case LIBUSB_ERROR_TIMEOUT:
-    	printf("Transfer timed out\n");
+    	//printf("Transfer timed out\n");
     	break;
     case LIBUSB_ERROR_PIPE:
     	printf("LIBUSB_ERROR_PIPE \n");
