@@ -9,7 +9,7 @@ extern GANDALFconfig cfg;
 int Initialize(char *pars){
 
 #ifdef USE_GANDALF
-	GANDALFInit(&cfg);
+	//GANDALFInit(&cfg);
 	GANDALFConfig(&cfg);
 #endif
 

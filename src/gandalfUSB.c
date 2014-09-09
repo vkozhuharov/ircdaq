@@ -221,10 +221,10 @@ int GANDALFConfigDAC(GANDALFconfig *cfg) {
     writeUSB(CMR + MUOFFSET + DAC_VAL + 8,val); //
     writeUSB(CMR + MUOFFSET + DAC_VAL + 12,val); //
     //Down mezzanine
-    /* writeUSB(CMR + MDOFFSET + DAC_VAL,val); // */
-    /* writeUSB(CMR + MDOFFSET + DAC_VAL + 4,val); // */
-    /* writeUSB(CMR + MDOFFSET + DAC_VAL + 8,val); // */
-    /* writeUSB(CMR + MDOFFSET + DAC_VAL + 12,val); // */
+     writeUSB(CMR + MDOFFSET + DAC_VAL,val); //
+     writeUSB(CMR + MDOFFSET + DAC_VAL + 4,val); //
+     writeUSB(CMR + MDOFFSET + DAC_VAL + 8,val); //
+     writeUSB(CMR + MDOFFSET + DAC_VAL + 12,val); //
 
 
 
@@ -296,11 +296,13 @@ int GANDALFStartRun(GANDALFconfig *cfg){
 	val = 1;
 
     sendControlCommand(0x08);
-    usleep(1000);
+    usleep(100000);
 
     writeUSB(0x7034, 2); //load conf
+    usleep(100000);
 
     writeUSB(0x7044, 2); //BOS
+   // usleep(100000);
 
 
     return 0;
