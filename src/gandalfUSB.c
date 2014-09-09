@@ -288,6 +288,33 @@ int GANDALFGetDATA(GANDALFconfig *cfg,char *data, int maxsize){
     res = libusb_bulk_transfer(cfg->handle,cfg->desc_in->bEndpointAddress,
     		data, maxsize, &transferred, cfg->timeout );
 
+//    The timeout value is given in milliseconds.  Returns 0 on suc-
+//         cess, LIBUSB_ERROR_TIMEOUT	if the transfer	timed out, LIBUSB_ERROR_PIPE
+//         if	the control request was	not supported, LIBUSB_ERROR_OVERFLOW if	the
+//         device offered more data, LIBUSB_ERROR_NO_DEVICE if the device has	been
+//         disconnected and a	LIBUSB_ERROR code on other failure.
+    printf("Bulk transfer result: %d\n",res);
+    switch (res) {
+    case 0:
+    	break;
+    case LIBUSB_ERROR_TIMEOUT:
+    	printf("Transfer timed out\n");
+    	break;
+    case LIBUSB_ERROR_PIPE:
+    	printf("LIBUSB_ERROR_PIPE \n");
+    	break;
+    case LIBUSB_ERROR_OVERFLOW:
+    	printf("LIBUSB_ERROR_OVERFLOW \n");
+    	break;
+    case LIBUSB_ERROR_NO_DEVICE:
+    	printf("LIBUSB_ERROR_NO_DEVICE \n");
+    	break;
+//    case LIBUSB_ERROR:
+//    	printf("LIBUSB_ERROR \n");
+//    	break;
+
+    }
+
 	return transferred;
 }
 
