@@ -25,8 +25,10 @@ int is_usbdevblock( libusb_device *dev,int vid,int pid )
 	return 0;
 }
 
-unsigned int array2int(char *a) {
-  return a[0]<<24 | a[1]<<16 | a[2]<<8 | a[3];
+uint32_t array2int(char *a ) {
+	uint32_t b=0;
+	b = a[0]<<24 | a[1]<<16 | a[2]<<8 | a[3];
+	return b;
 }
 
 int int2array(int i,char a[4]) {
