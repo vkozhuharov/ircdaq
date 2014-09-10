@@ -101,6 +101,11 @@ struct GANRawEvent{
 
 
 
+//Functions:
+
+int convertGanEvent( struct GANRawEvent *ganEvt, void *evt);
+
+
 
 
 #endif /* GANDALFDATA_H_ */

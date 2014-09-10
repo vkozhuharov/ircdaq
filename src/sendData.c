@@ -60,10 +60,10 @@ int sendData(int fdin) {
 
     //Received complete event:
 
-//    if(1) {
-//    	sendDataToPCFarm(&mep,mep.hdr.mepLength);
-//    	mep.hdr.firstEventNum += 0;
-//    }
+    if(1) {
+    	sendDataToPCFarm(&mep,mep.hdr.mepLength);
+    	mep.hdr.firstEventNum += 0;
+    }
 
   }
   

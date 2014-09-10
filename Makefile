@@ -46,7 +46,8 @@ SRC = daq.c\
       net.c \
       usbtools.c \
       sysutils.c \
-      gandalfUSB.c
+      gandalfUSB.c \
+      gandalfData.c
 
 #OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 OBJ = $(SRC:.c=.o)
