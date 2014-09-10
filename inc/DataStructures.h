@@ -37,6 +37,7 @@ struct MEP {
 	struct rawEvent evts[MAX_N_EVENTS];
 };
 
+#define IRC_EVENT_SIZE(a)  (  (a) & 0xFFFF )
 
 
 #endif /* DATASTRUCTURES_H_ */

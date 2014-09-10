@@ -89,6 +89,9 @@ int processData(int fdin, int fdout) {
     //buf[0] = toupper(buf[0]);
     //write(fdout,buf,res);
     //write(fdout,&word,res);
+
+
+
 	 write(fdout,&evt,evsize);
 
  }
