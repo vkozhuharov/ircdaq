@@ -29,6 +29,8 @@ int processData(int fdin, int fdout) {
 	  tmp = swap(tmp); printf("DATA:  %08x \n",tmp);
 	  //wait for the beginning of some event.
 	  if ( tmp != GAN_EV_START) continue;
+
+	  printf("===========New event===============\n");
 	  memcpy(&tmp,&ganEvt.beg,4);
 
 	  //Now we have the start of the event here, let's get the rest
@@ -63,6 +65,9 @@ int processData(int fdin, int fdout) {
 		  printf("Received corrupted event ..... SKIPPING\n");
 		  continue;
 	  }
+
+	  printf("===========END of event=============\n");
+
 
 	  //Prepare the event to be sent to the DataSending module
 
