@@ -41,10 +41,10 @@ int processData(int fdin, int fdout) {
 	  memcpy(&ganEvt.slhdr,&tmp,4);
 	  read(fdin, &tmp, 4 );tmp=swap(tmp);
 	  //printf("DATA:  %08x \n",tmp);
-	  memcpy(((char *) &ganEvt.slhdr)  + 4 ,&tmp, 4);
+	  memcpy(((char *) &ganEvt.slhdr)  + 4 ,&tmp , 4);
 	  read(fdin, &tmp, 4 );tmp=swap(tmp);
 	  //printf("DATA:  %08x \n",tmp);
-	  memcpy(((char *) &ganEvt.slhdr)  + 4 ,&tmp, 4);
+	  memcpy(((char *) &ganEvt.slhdr)  + 8 , &tmp , 4);
 
 	  // printGanSLHdr(&ganEvt.slhdr);
 
