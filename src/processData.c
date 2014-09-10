@@ -7,6 +7,7 @@
 
 static struct rawEvent evt;
 static struct GANRawEvent ganEvt;
+static struct dataProcessHeader hdr;
 
 int processData(int fdin, int fdout) {
   int i=0;
@@ -76,9 +77,6 @@ int processData(int fdin, int fdout) {
 	  //printf("===========END of event=============\n");
 
 
-	  //Prepare the event to be sent to the DataSending module
-
-	 evsize = convertGanEvent(&ganEvt,&evt);
 
 //	  word = swap(tmp);
 	 // printf("DATA: %08x \t %08x \n",tmp, word);
@@ -91,7 +89,14 @@ int processData(int fdin, int fdout) {
     //write(fdout,&word,res);
 
 
-
+	 //Prepare the event to be sent to the DataSending module
+	 evsize = convertGanEvent(&ganEvt,&evt);
+	 //Send some preliminary information:
+	 prepareHeader(&ganEvt,&hdr);
+	 hdr.size = evsize;
+	 printf("Sending header for event with size: %d\n",evsize);
+	 write(fdout,&hdr,8);
+	 printf("Sending event with size: %d\n",evsize);
 	 write(fdout,&evt,evsize);
 
  }

@@ -94,8 +94,8 @@ struct GAN_slink_end{
 //All previous should be already aligned to 32 bits
 struct GANRawEvent{
 	struct GAN_slink_begin beg;
-	struct GAN_slink_header slhdr;
 	struct GAN_slink_end end;
+	struct GAN_slink_header slhdr;
 	uint32_t data[MAX_EV_SIZE];
 };
 
