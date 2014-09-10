@@ -26,31 +26,37 @@ int processData(int fdin, int fdout) {
   
   //  while((res = read(fdin,buf,4)) > 0 ) {
   while((res = read(fdin, &tmp, 4 )) == 4 ) {
-	  tmp = swap(tmp); printf("DATA:  %08x \n",tmp);
+	  tmp = swap(tmp);
+	  //printf("DATA:  %08x \n",tmp);
 	  //wait for the beginning of some event.
 	  if ( tmp != GAN_EV_START) continue;
 
-	  printf("===========New event===============\n");
+	  // printf("===========New event===============\n");
 	  memcpy(&tmp,&ganEvt.beg,4);
 
 	  //Now we have the start of the event here, let's get the rest
 	  //The three header words of the SLINK header
-	  read(fdin, &tmp, 4 );tmp=swap(tmp);printf("DATA:  %08x \n",tmp);
+	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  //printf("DATA:  %08x \n",tmp);
 	  memcpy(&ganEvt.slhdr,&tmp,4);
-	  read(fdin, &tmp, 4 );tmp=swap(tmp);printf("DATA:  %08x \n",tmp);
+	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  //printf("DATA:  %08x \n",tmp);
 	  memcpy(((char *) &ganEvt.slhdr)  + 4 ,&tmp, 4);
-	  read(fdin, &tmp, 4 );tmp=swap(tmp);printf("DATA:  %08x \n",tmp);
+	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  //printf("DATA:  %08x \n",tmp);
 	  memcpy(((char *) &ganEvt.slhdr)  + 4 ,&tmp, 4);
 
-	  printGanSLHdr(&ganEvt.slhdr);
+	  // printGanSLHdr(&ganEvt.slhdr);
 
-	  printf("Received new event with size %d\n",ganEvt.slhdr.evSize);
+	  printf("Received new event with size %d , number: %d, type: %d\n",
+			  ganEvt.slhdr.evSize,ganEvt.slhdr.evN,ganEvt.slhdr.evType );
 	  if(ganEvt.slhdr.evSize > MAX_EV_SIZE) {
 		  printf("*******ERROR*******: please increase the event size\n");
 	  }
 
 	  for(i=0;(i<ganEvt.slhdr.evSize-3) && (i<MAX_EV_SIZE);i++){
-		  read(fdin, &tmp, 4 ); tmp=swap(tmp); printf("DATA:  %08x \n",tmp);
+		  read(fdin, &tmp, 4 ); tmp=swap(tmp);
+		  //printf("DATA:  %08x \n",tmp);
 		  ganEvt.data[i] = tmp;
 	  }
 	  //Skip the rest of the event that we cannot put in the buffer
@@ -58,7 +64,8 @@ int processData(int fdin, int fdout) {
 		  read(fdin, &tmp, 4 );
 	  }
 
-	  read(fdin, &tmp, 4 ); tmp=swap(tmp); printf("DATA:  %08x \n",tmp);
+	  read(fdin, &tmp, 4 ); tmp=swap(tmp);
+	  //printf("DATA:  %08x \n",tmp);
 	  memcpy(&ganEvt.end,&tmp,4);
 
 	  if(ganEvt.end.cfed != GAN_EOV_CHECK) {
@@ -66,7 +73,7 @@ int processData(int fdin, int fdout) {
 		  continue;
 	  }
 
-	  printf("===========END of event=============\n");
+	  //printf("===========END of event=============\n");
 
 
 	  //Prepare the event to be sent to the DataSending module
