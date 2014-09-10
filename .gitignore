@@ -11,3 +11,6 @@ dep/
 
 # ignore all files ending with ~
 *~ 
+.cproject
+.project
+dump.test

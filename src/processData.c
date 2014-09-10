@@ -69,6 +69,7 @@ int processData(int fdin, int fdout) {
 	 // printf("DATA: %08x \t %08x \n",tmp, word);
 
 	  //	  decodeGandalEvent();
+	 //test of git
 
     //buf[0] = toupper(buf[0]);
     //write(fdout,buf,res);
