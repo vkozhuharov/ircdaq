@@ -26,17 +26,17 @@ int processData(int fdin, int fdout) {
   
   //  while((res = read(fdin,buf,4)) > 0 ) {
   while((res = read(fdin, &tmp, 4 )) == 4 ) {
-	  tmp = swap(tmp);
+	  tmp = swap(tmp); printf("DATA:  %08x \n",tmp);
 	  //wait for the beginning of some event.
 	  if ( tmp != GAN_EV_START) continue;
 	  //Now we have the start of the event here, let's get the rest
 	  //The three header words of the SLINK header
 	  memcpy(&tmp,&ganEvt.beg,4);
-	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  read(fdin, &tmp, 4 );tmp=swap(tmp);printf("DATA:  %08x \n",tmp);
 	  memcpy(&tmp,&ganEvt.slhdr,4);
-	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  read(fdin, &tmp, 4 );tmp=swap(tmp);printf("DATA:  %08x \n",tmp);
 	  memcpy(&tmp,((char *) &ganEvt.slhdr)  + 4 , 4);
-	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  read(fdin, &tmp, 4 );tmp=swap(tmp);printf("DATA:  %08x \n",tmp);
 	  memcpy(&tmp,((char *) &ganEvt.slhdr)  + 4 , 4);
 
 	  printf("Received new event with size %d\n",ganEvt.slhdr.evSize);
@@ -45,7 +45,7 @@ int processData(int fdin, int fdout) {
 	  }
 
 	  for(i=0;(i<ganEvt.slhdr.evSize-3) && (i<MAX_EV_SIZE);i++){
-		  read(fdin, &tmp, 4 ); tmp=swap(tmp);
+		  read(fdin, &tmp, 4 ); tmp=swap(tmp); printf("DATA:  %08x \n",tmp);
 		  ganEvt.data[i] = tmp;
 	  }
 	  //Skip the rest of the event that we cannot put in the buffer
@@ -53,7 +53,7 @@ int processData(int fdin, int fdout) {
 		  read(fdin, &tmp, 4 );
 	  }
 
-	  read(fdin, &tmp, 4 ); tmp=swap(tmp);
+	  read(fdin, &tmp, 4 ); tmp=swap(tmp); printf("DATA:  %08x \n",tmp);
 	  memcpy(&tmp,&ganEvt.end,4);
 
 	  if(ganEvt.end.cfed != GAN_EOV_CHECK) {
