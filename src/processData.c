@@ -39,6 +39,8 @@ int processData(int fdin, int fdout) {
 	  read(fdin, &tmp, 4 );tmp=swap(tmp);printf("DATA:  %08x \n",tmp);
 	  memcpy(&tmp,((char *) &ganEvt.slhdr)  + 4 , 4);
 
+
+
 	  printf("Received new event with size %d\n",ganEvt.slhdr.evSize);
 	  if(ganEvt.slhdr.evSize > MAX_EV_SIZE) {
 		  printf("*******ERROR*******: please increase the event size\n");
