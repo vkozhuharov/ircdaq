@@ -42,7 +42,8 @@ struct rawEvent{
 
 struct MEP {
 	struct MEP_HDR hdr;
-	struct rawEvent evts[MAX_N_EVENTS];
+	uint8_t data[MAXDATA];
+	//struct rawEvent evts[MAX_N_EVENTS];
 };
 
 #define IRC_EVENT_SIZE(a)  ((a) & 0xFFFF )

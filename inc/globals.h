@@ -15,7 +15,7 @@
 #define MAXDATA 100000000       //in bytes
 #define MAX_EV_SIZE 100000      //in 32 bit words
 #define DETECTOR_SOURCE_ID  0x20
-
+#define NEVENTS_TO_PCFARM   10
 
 
 #endif /* GLOBALS_H_ */
