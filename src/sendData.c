@@ -12,11 +12,21 @@
 
 static struct MEP mep;
 static struct dataProcessHeader hdr;
-static struct rawEvent evt;
+static struct rawEvent *evt;
 
 int sendDataToPCFarm(void*,uint16_t);
 
 //test of the GITHUB
+int mepInit(struct MEP_HDR *hdr){
+  hdr->sourceID = 0x20;
+  hdr->firstEventNum = 0;
+  hdr->sourceSubID = 0;
+  hdr->mepLength = sizeof (struct MEP_HDR);
+  hdr->eventCount = 0;
+  
+  return 0;
+}
+
 
 
 // Send data to its final destination
@@ -34,11 +44,11 @@ int sendData(int fdin) {
 	printf("Data sending thread started, PID:  %d, PPID: %d \n",getpid(), getppid());
 
 
-	/* sprintf(fname,"data/output"); */
-	/* if( (fout = open(fname,O_CREAT |O_WRONLY,S_IRUSR|S_IWUSR)) == -1) { */
-	/* 	printf("Cannot open output file %s\n",fname); */
-	/* 	return 1; */
-	/* } */
+	sprintf(fname,"data/output");
+	if( (fout = open(fname,O_CREAT |O_WRONLY,S_IRUSR|S_IWUSR)) == -1) {
+		printf("Cannot open output file %s\n",fname);
+		return 1;
+	}
 
 	printf("Size of MEP_HDR: %d\n",sizeof(struct MEP_HDR));
 
@@ -64,22 +74,37 @@ int sendData(int fdin) {
 	//	nEvts = 0;
 	int pos = 0;
 	int first = 1;
-
+	int EOB = 0;
+	int SOB = 0;
+	
+	mepInit(&mep.hdr);
 	while((res = read(fdin,&hdr,8)) == 8 ) {
 		//We have the header of the event
-		printf("Received header for event with length %d\n",hdr.size);
+	  //	printf("Received header for event with length %d\n",hdr.size);
+		// Now get the event and put it in the MEP
+		res = read(fdin,&mep.data[pos], hdr.size );
+		//Check for the consistency of the received data:
+		if(res != hdr.size) {
+		  printf("***** ERROR: Not able to get the event ..., skipping\n");
+		  continue;
+		}
+		
+		//And now check what we've got ...
 
-		//Do we have to send something ?
-		if( mep.hdr.eventCount == NEVENTS_TO_PCFARM || hdr.type == IRC_EVTYPE_EOB_SIG) {
-		  //All events that had to be received were received so nothing else should be done!
-			sendDataToPCFarm(&mep,mep.hdr.mepLength);
-			first = 1;
-			if(hdr.type == IRC_EVTYPE_EOB_SIG) {
-			  printf("EOB signal received\n");
-			  //Close the output dump file
-			}
+		//If it is a normal event: 
+		if(hdr.type == IRC_EVTYPE_SOB_SIG) {  
+		  printf("Received end of burst command trigger\n");
+		  continue;
+		}
+		
+		if(hdr.type == IRC_EVTYPE_EOB_SIG  ) {
+		  printf("Received start of burst command trigger\n");
+		  continue;
 		}
 
+		//So the event is normal
+		evt = (struct rawEvent *) &mep.data[pos];
+		printf("Event number: %d, type: %d\n",evt->evN,hdr.type);
 
 
 		if(hdr.type == IRC_EVTYPE_SOB_TRIG ) {
@@ -89,74 +114,77 @@ int sendData(int fdin) {
 		  sprintf(fname,"data/gandalf_rawdata_%d_%.2d_%.2d_%.2d_%.2d_%.2d",
 			  tt_beg->tm_year+1900,tt_beg->tm_mon+1,tt_beg->tm_mday,
 			  tt_beg->tm_hour,tt_beg->tm_min, tt_beg->tm_sec);
-
+		  
 		  if(fout != -1) {
+		    printf("Received Start of Burst without end of burst\n");
 		    //The file that we were writing to was not closed ... no EOB received ...
 		    close(fout);
+		    fout = -1;
 		  }
-
+		  
 		  //sprintf(fname,"data/output");
 		  if( (fout = open(fname,O_CREAT |O_WRONLY,S_IRUSR|S_IWUSR)) == -1) {
 		    printf("Cannot open output file %s\n",fname);
 		    return 1;
 		  }		  
 		}
-		
-		//The next arriving event is the first event in the MEP
-		if(first) {
-			//Prepare the part of the MEP header
-			mep.hdr.sourceID = 0x20;
-			mep.hdr.firstEventNum = hdr.evN;
-			mep.hdr.sourceSubID = 0;
-			mep.hdr.mepLength = sizeof (struct MEP_HDR);
-			mep.hdr.eventCount = 0;
-			pos = 0;
-			first = 0;
-		}
-		
-		
-		// Now get the event and put it in the MEP
-		res = read(fdin,&mep.data[pos], hdr.size );
-		//Check for the consistency of the received data:
-		if(res != hdr.size) {
-		  printf("***** ERROR: Not able to get the event ..., skipping\n");
-		  continue;
-		}
-
-		if(hdr.type == IRC_EVTYPE_EOB_TRIG) {
-		  printf("EOB trigger received .... waiting for EOB signal\n");
-		}
-		
-		if(hdr.type == IRC_EVTYPE_SOB_SIG) {  
-		  printf("Command trigger: skipping\n");
-		  continue;
-		}
-		
-		if(hdr.type == IRC_EVTYPE_EOB_SIG  ) {
-		  printf("Start of burst command trigger: skipping\n");
-		  continue;
-		}
-
 		//Write the event to disk for spying
 		write(fout, &mep.data[pos], res);
+
+		//Enough for the writing, let's handle the PCfarm output
 		// Set that we have to go to next position
 		pos += hdr.size;
 		//update the MEP length
 		mep.hdr.mepLength += hdr.size;
 		mep.hdr.eventCount ++;
 		
+
+		//The arriving event is the first event in the MEP
+		if(first) {
+			//Prepare the part of the MEP header
+			mep.hdr.firstEventNum = hdr.evN;
+			first = 0;
+		}
+
+		//Do we have to send something ?
+		if( mep.hdr.eventCount == NEVENTS_TO_PCFARM || hdr.type == IRC_EVTYPE_EOB_TRIG) {
+		  //All events that had to be received were received so nothing else should be done!
+		  printf("Sending %d events to PCfarm with total size %d\n",
+			 mep.hdr.eventCount,mep.hdr.mepLength);
+		  sendDataToPCFarm(&mep,mep.hdr.mepLength);
+		  first = 1;
+		  pos = 0; //data send, reset the position from which we have start
+		  mep.hdr.eventCount = 0;
+		  mep.hdr.mepLength = sizeof (struct MEP_HDR);
+		  if(hdr.type == IRC_EVTYPE_EOB_TRIG) {
+		    printf("EOB trigger received\n");
+		    //Close the output dump file
+		    close(fout);
+		    fout = -1;
+		  }
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 		//putchar(buf[0]);
 		//  printf("DATA:  %08x \n", word);
 		
 	}
-
-
-
-
+	
+	
+	
+	
 	//Exit since the buffer is over
 	printf("EOF received: terminate the output....");
-	close(fout);
+	
+	if(fout) 
+	  close(fout);
+
 	printf("DONE \n");
 
 

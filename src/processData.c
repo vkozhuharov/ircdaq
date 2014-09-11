@@ -49,8 +49,8 @@ int processData(int fdin, int fdout) {
 
 	  // printGanSLHdr(&ganEvt.slhdr);
 
-	  printf("Received new event with size %d , number: %d, type: %d\n",
-			  ganEvt.slhdr.evSize,ganEvt.slhdr.evN,ganEvt.slhdr.evType );
+	  // printf("Received new event with size %d , number: %d, type: %d\n",
+	  //  ganEvt.slhdr.evSize,ganEvt.slhdr.evN,ganEvt.slhdr.evType );
 	  if(ganEvt.slhdr.evSize > MAX_EV_SIZE) {
 		  printf("*******ERROR*******: please increase the event size\n");
 	  }
@@ -94,9 +94,9 @@ int processData(int fdin, int fdout) {
 	 //Send some preliminary information:
 	 prepareHeader(&ganEvt,&hdr);
 	 hdr.size = evsize;
-	 printf("Sending header for event with size: %d\n",evsize);
+	 // printf("Sending header for event with size: %d\n",evsize);
 	 write(fdout,&hdr,8);
-	 printf("Sending event with size: %d\n",evsize);
+	 //printf("Sending event with size: %d\n",evsize);
 	 write(fdout,&evt,evsize);
 
  }

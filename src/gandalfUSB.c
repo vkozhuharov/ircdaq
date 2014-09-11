@@ -49,7 +49,7 @@ int GANDALFInit(GANDALFconfig *cfg) {
 	listUSBDevices();
 
 	libusb_init(&cfg->ctx);
-	libusb_set_debug(cfg->ctx,3);
+	libusb_set_debug(cfg->ctx, 1);
 
 	if (findGANDALF(cfg) == NULL) {
 		printf("GANDALF not found\n");
