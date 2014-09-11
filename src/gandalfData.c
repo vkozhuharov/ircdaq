@@ -23,23 +23,23 @@ int prepareHeader(struct GANRawEvent *ganEvt,struct dataProcessHeader *hdr){
 	hdr->source = DETECTOR_SOURCE_ID;
 	hdr->evN    = ganEvt->slhdr.evN;
 	switch(ganEvt->slhdr.evType){
-	case 2:
-		hdr->type = 2;
+	case L0_EOB_SIG:
+		hdr->type = IRC_EVTYPE_EOB_SIG;
 		break;
-	case 0:
-		hdr->type = 0;
+	case L0_TRIG:  //Normal triggers
+		hdr->type = IRC_EVTYPE_STD;
 		break;
-	case 8:
-		hdr->type = 1;
+	case L0_SOB_TRIG:
+		hdr->type = IRC_EVTYPE_SOB_TRIG;
 		break;
-	case 12:
-		hdr->type = 8;
+	case L0_EOB_TRIG:
+		hdr->type = IRC_EVTYPE_EOB_TRIG;
 		break;
-	case 3:
-		hdr->type = 4;
+	case L0_SOB_SIG:
+		hdr->type = IRC_EVTYPE_SOB_SIG;
 		break;
 	default:
-		hdr->type = 8;
+		hdr->type = IRC_EVTYPE_STD;
 	}
 	return 0;
 }

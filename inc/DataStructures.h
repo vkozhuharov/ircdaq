@@ -49,8 +49,17 @@ struct MEP {
 #define IRC_EVENT_SIZE(a)  ((a) & 0xFFFF )
 #define IRC_EVENT_TYPE(a)  (((a)>> 16)&0xF )
 
-#define IRC_EVTYPE_STD  0x0
-#define IRC_EVTYPE_SOB  0x1
-#define IRC_EVTYPE_EOB  0x2
+#define IRC_EVTYPE_STD       0x0
+#define IRC_EVTYPE_SOB_TRIG  0x1
+#define IRC_EVTYPE_EOB_TRIG  0x2
+#define IRC_EVTYPE_SOB_SIG   0x4
+#define IRC_EVTYPE_EOB_SIG   0x8
+
+
+#define L0_SOB_TRIG   8   // 0100
+#define L0_EOB_TRIG   12  // 1100
+#define L0_SOB_SIG    3   // 0011
+#define L0_EOB_SIG    2   // 0010
+#define L0_TRIG       0   // Normal trigger for the moment .... (should be different)
 
 #endif /* DATASTRUCTURES_H_ */
