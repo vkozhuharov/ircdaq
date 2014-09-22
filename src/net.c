@@ -18,7 +18,8 @@ int sendDataToPCFarm(void *data, uint16_t size){
 
 	bzero(&servaddr,sizeof(servaddr) );
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr=inet_addr("128.141.24.170");
+        servaddr.sin_addr.s_addr=inet_addr("10.194.20.30");
+//	servaddr.sin_addr.s_addr=inet_addr("128.141.24.170");
 	servaddr.sin_port = htons(DEST_PORT);
 
     sendto(sockfd,data, size, 0 , (struct sockaddr *) &servaddr, sizeof(servaddr));
