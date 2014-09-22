@@ -26,7 +26,7 @@ GANDALFconfig cfg;
 
 
 int daq_quit(){
-	if( access( "quit", F_OK ) != -1 ) {
+	if( access( "stat/QUIT", F_OK ) != -1 ) {
 		// file exists
 		return 1;
 	} else {
@@ -34,6 +34,9 @@ int daq_quit(){
 		return 0;
 	}
 }
+
+
+
 
 
 void DAQ_exit(){
