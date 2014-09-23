@@ -12,7 +12,7 @@
 //typedef uint32_t  int
 
 #define USBTRANSFER_TIMEOUT 50  //in miliseconds!
-#define MAXDATA 100000000       //in bytes
+#define MAXDATA 10000000       //in bytes
 #define MAX_EV_SIZE 100000      //in 32 bit words
 #define DETECTOR_SOURCE_ID  0x20
 #define NEVENTS_TO_PCFARM   10

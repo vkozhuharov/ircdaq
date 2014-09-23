@@ -42,10 +42,10 @@ int getData( int fdout ) {
 //	  sleep(1);
 #ifdef USE_GANDALF
 	  nbytes = GANDALFGetDATA(&cfg, buf, MAXDATA);
-	  if (nbytes > 0)
-		  printf("Transferred %d bytes\n",nbytes);
+//	  if (nbytes > 0)
+//		  printf("Transferred %d bytes\n",nbytes);
 	  write(fdout,buf,nbytes);
-	  usleep(USBTRANSFER_TIMEOUT*1000*3);
+	  usleep(USBTRANSFER_TIMEOUT*1000*1);
 
 #else
 	  sprintf (buf,"Thread 1 alive: %d\n",i++);

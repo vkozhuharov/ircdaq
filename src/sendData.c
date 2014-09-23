@@ -51,6 +51,7 @@ int sendData(int fdin) {
 	uint32_t word;
 	struct tm *tt_beg;
 	time_t tim;
+	int nev = 0;
 
 	printf("Data sending thread started, PID:  %d, PPID: %d \n",getpid(), getppid());
 
@@ -144,12 +145,13 @@ int sendData(int fdin) {
 		    return 1;
 		  }		  
 		}
+
 		//Write the event to disk for spying
 		if(writeflag) {
 			//if writing is disabled, we will have at least an empty file!
 			write(fout, &mep.data[pos], res);
 		}
-
+		nev++;
 		//Enough for the writing, let's handle the PCfarm output
 		// Set that we have to go to next position
 		pos += hdr.size;
@@ -178,7 +180,8 @@ int sendData(int fdin) {
 		  mep.hdr.eventCount = 0;
 		  mep.hdr.mepLength = sizeof (struct MEP_HDR);
 		  if(hdr.type == IRC_EVTYPE_EOB_TRIG) {
-		    printf("EOB trigger received\n");
+		    printf("EOB trigger received: %d events in burst: %s\n",nev,fname);
+		    nev = 0;
 		    //Close the output dump file
 		    close(fout);
 		    fout = -1;
