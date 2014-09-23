@@ -70,7 +70,7 @@ int processData(int fdin, int fdout) {
 	  memcpy(&ganEvt.end,&tmp,4);
 
 	  if(ganEvt.end.cfed != GAN_EOV_CHECK) {
-		  printf("Received corrupted event ..... SKIPPING\n");
+		  //printf("Received corrupted event ..... SKIPPING\n");
 		  continue;
 	  }
 
