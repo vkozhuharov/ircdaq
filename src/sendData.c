@@ -27,7 +27,18 @@ int mepInit(struct MEP_HDR *hdr){
   return 0;
 }
 
+int inRUN(){
+	if( access( "stat/RUN", F_OK ) != -1 ) {
+		// file exists
+		return 1;
+	} else {
+		// file doesn't exist
+		return 0;
+	}
+}
 
+static int sendflag = 0;
+static int writeflag = 0;
 
 // Send data to its final destination
 // either disk or network ... depends on what we want to do with it
@@ -43,6 +54,8 @@ int sendData(int fdin) {
 
 	printf("Data sending thread started, PID:  %d, PPID: %d \n",getpid(), getppid());
 
+	sendflag = inRUN();
+	writeflag = 1;
 
 	sprintf(fname,"data/output");
 	if( (fout = open(fname,O_CREAT |O_WRONLY,S_IRUSR|S_IWUSR)) == -1) {
@@ -104,11 +117,14 @@ int sendData(int fdin) {
 
 		//So the event is normal
 		evt = (struct rawEvent *) &mep.data[pos];
-		printf("Event number: %d, type: %d\n",evt->evN,hdr.type);
+		//printf("Event number: %d, type: %d\n",evt->evN,hdr.type);
 
 
 		if(hdr.type == IRC_EVTYPE_SOB_TRIG ) {
-		  //Open a new file to write the dump
+			//Check whether to send this burst to PCfarm
+			sendflag = inRUN();
+
+			//Open a new file to write the dump
 		  tim = time(0);
 		  tt_beg  = localtime(&tim);
 		  sprintf(fname,"data/gandalf_rawdata_%d_%.2d_%.2d_%.2d_%.2d_%.2d",
@@ -129,7 +145,10 @@ int sendData(int fdin) {
 		  }		  
 		}
 		//Write the event to disk for spying
-		write(fout, &mep.data[pos], res);
+		if(writeflag) {
+			//if writing is disabled, we will have at least an empty file!
+			write(fout, &mep.data[pos], res);
+		}
 
 		//Enough for the writing, let's handle the PCfarm output
 		// Set that we have to go to next position
@@ -149,9 +168,11 @@ int sendData(int fdin) {
 		//Do we have to send something ?
 		if( mep.hdr.eventCount == NEVENTS_TO_PCFARM || hdr.type == IRC_EVTYPE_EOB_TRIG) {
 		  //All events that had to be received were received so nothing else should be done!
-		  printf("Sending %d events to PCfarm with total size %d\n",
-			 mep.hdr.eventCount,mep.hdr.mepLength);
-		  sendDataToPCFarm(&mep,mep.hdr.mepLength);
+		  //printf("Sending %d events to PCfarm with total size %d\n", mep.hdr.eventCount,mep.hdr.mepLength);
+		  if(sendflag) {
+			  //send data to PC farm only if we are in burst
+			  sendDataToPCFarm(&mep,mep.hdr.mepLength);
+		  }
 		  first = 1;
 		  pos = 0; //data send, reset the position from which we have start
 		  mep.hdr.eventCount = 0;
