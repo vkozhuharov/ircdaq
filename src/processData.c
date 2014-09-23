@@ -28,7 +28,7 @@ int processData(int fdin, int fdout) {
   //  while((res = read(fdin,buf,4)) > 0 ) {
   while((res = read(fdin, &tmp, 4 )) == 4 ) {
 	  tmp = swap(tmp);
-	  //printf("DATA:  %08x \n",tmp);
+	  printf("DATA:  %08x \n",tmp);
 	  //wait for the beginning of some event.
 	  if ( tmp != GAN_EV_START) continue;
 
@@ -38,13 +38,13 @@ int processData(int fdin, int fdout) {
 	  //Now we have the start of the event here, let's get the rest
 	  //The three header words of the SLINK header
 	  read(fdin, &tmp, 4 );tmp=swap(tmp);
-	  //printf("DATA:  %08x \n",tmp);
+	  printf("DATA:  %08x \n",tmp);
 	  memcpy(&ganEvt.slhdr,&tmp,4);
 	  read(fdin, &tmp, 4 );tmp=swap(tmp);
-	  //printf("DATA:  %08x \n",tmp);
+	  printf("DATA:  %08x \n",tmp);
 	  memcpy(((char *) &ganEvt.slhdr)  + 4 ,&tmp , 4);
 	  read(fdin, &tmp, 4 );tmp=swap(tmp);
-	  //printf("DATA:  %08x \n",tmp);
+	  printf("DATA:  %08x \n",tmp);
 	  memcpy(((char *) &ganEvt.slhdr)  + 8 , &tmp , 4);
 
 	  // printGanSLHdr(&ganEvt.slhdr);
@@ -70,7 +70,7 @@ int processData(int fdin, int fdout) {
 	  memcpy(&ganEvt.end,&tmp,4);
 
 	  if(ganEvt.end.cfed != GAN_EOV_CHECK) {
-		  //printf("Received corrupted event ..... SKIPPING\n");
+		  printf("Received corrupted event ..... SKIPPING\n");
 		  continue;
 	  }
 
