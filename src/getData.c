@@ -56,7 +56,7 @@ int getData( int fdout ) {
 	  transferred+=nbytes;
 //	  if (nbytes > 0)
 //		  printf("Transferred %d bytes\n",nbytes);
-	  write(fdout,buf,nbytes);
+	  //write(fdout,buf,nbytes);
 	  tim2 = time(0);
 
 	  if(tim2 - tim1 == 1) {
