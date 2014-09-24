@@ -17,6 +17,8 @@ int processData(int fdin, int fdout) {
   uint32_t tmp;
   uint32_t word;
 
+  uint32_t tmpa[128];
+
   //unsigned int word;
 
   printf("Data processing thread started, PID:  %d, PPID: %d \n",getpid(), getppid());
@@ -37,13 +39,18 @@ int processData(int fdin, int fdout) {
 
 	  //Now we have the start of the event here, let's get the rest
 	  //The three header words of the SLINK header
-	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  read(fdin, tmpa, 12 );
+
+	  //read(fdin, &tmp, 4 );
+	  tmp=swap(tmpa[0]);
 	  //printf("DATA:  %08x \n",tmp);
 	  memcpy(&ganEvt.slhdr,&tmp,4);
-	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  //read(fdin, &tmp, 4 );
+	  tmp=swap(tmpa[1]);
 	  //printf("DATA:  %08x \n",tmp);
 	  memcpy(((char *) &ganEvt.slhdr)  + 4 ,&tmp , 4);
-	  read(fdin, &tmp, 4 );tmp=swap(tmp);
+	  //read(fdin, &tmp, 4 );
+	  tmp=swap(tmpa[2]);
 	  //printf("DATA:  %08x \n",tmp);
 	  memcpy(((char *) &ganEvt.slhdr)  + 8 , &tmp , 4);
 
