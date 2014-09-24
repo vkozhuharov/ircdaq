@@ -21,6 +21,12 @@ int getData( int fdout ) {
   int state;
   int nbytes; //
 
+	struct tm *tt_beg;
+	time_t tim1;
+	time_t tim2;
+	long unsigned int transferred = 0;
+
+
 //  printf("getData: Status pointer: %x\n",pstatus);
 
 
@@ -29,6 +35,10 @@ int getData( int fdout ) {
   // prctl(PR_SET_PDEATHSIG, SIG_IGN);
 
   // while(i<10) {
+  tim1 = time(0);
+  tim2 = time(0);
+
+
   while(1) {
 //	  state = *pstatus;
 //	  //printf("State as seen from getData: %d\n",state);
@@ -41,11 +51,19 @@ int getData( int fdout ) {
 //		  i = 0;
 //	  sleep(1);
 #ifdef USE_GANDALF
+
 	  nbytes = GANDALFGetDATA(&cfg, buf, MAXDATA);
+	  transferred+=nbytes;
 //	  if (nbytes > 0)
 //		  printf("Transferred %d bytes\n",nbytes);
 	  write(fdout,buf,nbytes);
-	  usleep(USBTRANSFER_TIMEOUT*1000*1);
+	  tim2 = time(0);
+
+	  if(tim2 - tim1 == 1) {
+		  printf("Transfer speed: ~%lf MB/s\n",(double) transferred/1e6);
+		  tim1 = time(0);
+	  }
+//	  usleep(USBTRANSFER_TIMEOUT*1000*1);
 
 #else
 	  sprintf (buf,"Thread 1 alive: %d\n",i++);
