@@ -61,7 +61,7 @@ int getData( int fdout ) {
 
 	  if(tim2 - tim1 == 1) {
 		  printf("Transfer speed: ~%lf MB/s\n",(double) transferred/1e6);
-		  tim1 = time(0);
+		  tim1 = time(0);transferred = 0;
 	  }
 //	  usleep(USBTRANSFER_TIMEOUT*1000*1);
 
